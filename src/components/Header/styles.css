@@ -1,0 +1,19 @@
+header {
+    background-color: #3f3f3f;
+    color: #fff;
+    padding: 16px;
+    text-align: center;
+}
+li{
+    list-style-type: none;
+}
+
+header a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px; 
+    margin-top: 20px;
+}
+
+
+  
