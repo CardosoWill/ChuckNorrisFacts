@@ -1,26 +1,23 @@
 import { Link } from 'react-router-dom';
 import './styles.css';
 
-export default function Header(){
-    return(
-        
-            <header id="cabecalho">
-                <h1>Página dedicada aos feitos inéditos de Chuck Norris</h1>
-                
-                <nav>
-                    <ul>
-                        <Link to="/">
-                            <li>Login</li>
-                        </Link>
-                        <Link to="/home">
-                            <li>Home</li>
-                        </Link>
-                        <Link to="/about">
-                            <li>Sobre</li>
-                        </Link>
-                    </ul>
-                </nav>
-            </header>
-           
-    )
+export default function Header() {
+    return (
+        <header id="cabecalho">
+            <h1>Página dedicada aos feitos inéditos de Chuck Norris</h1>
+            <nav>
+                <ul>
+                    <li>
+                        <Link to="/">Login</Link>
+                    </li>
+                    <li>
+                        <Link to="/home">Home</Link>
+                    </li>
+                    <li>
+                        <Link to="/about">Sobre</Link>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+    );
 }
