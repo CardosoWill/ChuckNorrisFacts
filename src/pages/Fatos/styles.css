@@ -1,0 +1,22 @@
+.chuck-norris-jokes {
+  text-align: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+select {
+  margin-right: 10px;
+  padding: 5px;
+}
+
+button {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+p {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
