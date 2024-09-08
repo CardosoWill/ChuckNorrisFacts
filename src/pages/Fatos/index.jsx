@@ -1,3 +1,4 @@
+import './styles.css';
 import React, { useState, useEffect } from 'react';
 
 export default function ChuckNorrisJokes() {
@@ -8,9 +9,13 @@ export default function ChuckNorrisJokes() {
     // Carregar as categorias disponíveis da API ao montar o componente
     useEffect(() => {
         async function carregarCategorias() {
-            const response = await fetch('https://api.chucknorris.io/jokes/categories');
-            const data = await response.json();
-            setCategorias(data);
+            try {
+                const response = await fetch('https://api.chucknorris.io/jokes/categories');
+                const data = await response.json();
+                setCategorias(data);
+            } catch (error) {
+                console.error('Erro ao carregar categorias:', error);
+            }
         }
         carregarCategorias();
     }, []);
@@ -19,9 +24,14 @@ export default function ChuckNorrisJokes() {
     async function carregarPiada() {
         if (!categoria) return;
 
-        const response = await fetch(`https://api.chucknorris.io/jokes/random?category=${categoria}`);
-        const data = await response.json();
-        setPiada(data.value);
+        try {
+            const response = await fetch(`https://api.chucknorris.io/jokes/random?category=${categoria}`);
+            const data = await response.json();
+            setPiada(data.value);
+        } catch (error) {
+            console.error('Erro ao carregar piada:', error);
+            setPiada('Ocorreu um erro ao carregar a piada. Tente novamente.');
+        }
     }
 
     return (
