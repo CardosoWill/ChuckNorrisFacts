@@ -4,18 +4,22 @@ import './styles.css';
 export default function Header() {
     return (
         <header id="cabecalho">
-            <h1>Página dedicada aos feitos inéditos de Chuck Norris</h1>
+            <h1>feitos de Chuck Norris</h1>
+            
             <nav>
                 <ul>
-                    <li>
-                        <Link to="/">Login</Link>
-                    </li>
-                    <li>
-                        <Link to="/home">Home</Link>
-                    </li>
-                    <li>
-                        <Link to="/about">Sobre</Link>
-                    </li>
+                    <Link to="/">
+                        <li>Login</li>
+                    </Link>
+                    <Link to="/home">
+                        <li>Home</li>
+                    </Link>
+                    <Link to="/about">
+                        <li>Sobre</li>
+                    </Link>
+                    <Link to="/fatos">
+                        <li>Fatos</li>
+                    </Link>
                 </ul>
             </nav>
         </header>
