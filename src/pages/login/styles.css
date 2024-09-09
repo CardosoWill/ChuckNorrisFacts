@@ -1,18 +1,14 @@
-/* Estilos globais */
-main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Define a altura do main para ocupar a tela inteira */
+::selection {
+    background-color: gray;
 }
 
 .container {
+    margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/* Estilos do formulário */
 .form {
     width: 400px;
     height: 400px;
@@ -65,8 +61,4 @@ main {
 .btn:hover {
     background-color: antiquewhite;
     box-shadow: none;
-}
-
-::selection {
-    background-color: gray;
 }
