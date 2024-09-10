@@ -1,4 +1,3 @@
-
 ::selection {
     background-color: gray;
 }
@@ -8,12 +7,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
 
 .form {
     width: 400px;
-    padding: 2rem;
+    height: 400px;
     background-image: linear-gradient(to bottom, #424242, #212121);
     display: flex;
     align-items: center;
@@ -23,14 +21,14 @@
 
 .title {
     color: wheat;
-    margin-bottom: 2rem;
+    margin: 3rem 0;
     font-size: 2rem;
 }
 
 .input {
     margin: 0.5rem 0;
-    padding: 1rem;
-    width: 100%;
+    padding: 1rem 0.5rem;
+    width: 20rem;
     background-color: inherit;
     color: wheat;
     border: none;
@@ -47,34 +45,20 @@
 
 .btn {
     height: 3rem;
-    width: 100%;
-    margin-top: 1rem;
-    background-color: #555;
-    color: white;
+    width: 20rem;
+    margin-top: 3rem;
+    background-color: wheat;
     border-radius: 0.5rem;
     border: none;
     font-size: 1.2rem;
-    transition: all 300ms ease;
+    transition: all 400ms;
     cursor: pointer;
+    box-shadow:
+        0 0 10px antiquewhite,
+        0 0 10px antiquewhite;
 }
 
 .btn:hover {
-    background-color: #777; 
-}
-
-.register-link {
-    margin-top: 1rem;
-    color: wheat;
-    font-size: 0.9rem;
-}
-
-.register-link .link {
-    color: #00f;
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-.register-link .link:hover {
-    color: #007bff;
-    text-decoration: none;
+    background-color: antiquewhite;
+    box-shadow: none;
 }
