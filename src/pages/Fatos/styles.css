@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-image: url('https://img.freepik.com/fotos-gratis/cowboy-indo-na-velha-cidade-ocidental_23-2150527886.jpg?w=1380&t=st=1725925918~exp=1725926518~hmac=7646d670bf7651d8f9581a78af19097acf9bc99042aec9a97cdc6f07036df486');
+  background-image: url(../../assets/Img/cowboy-no-sol.jpg);
   background-size: cover;
   background-position: center; 
   background-repeat: no-repeat;
@@ -22,6 +22,7 @@
 }
 
 .piadas select {
+  text-transform: capitalize;
   padding: 15px;
   margin: 20px 10px 20px 0;
   font-size: 1.2rem;

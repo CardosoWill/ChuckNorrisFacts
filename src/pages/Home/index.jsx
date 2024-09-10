@@ -17,12 +17,11 @@ export default function Home() {
     }
 
     return (
-        <main>
+        <main className='home'>
             <h2>Algumas <s>piadas</s> FATOS sobre o Chuck Norris</h2>
-            <div className="chuck-norris-jokes">
-                <h1>Piadas do Chuck Norris</h1>
-                <button onClick={carregarPiada}>Contar Piada</button>
+            <div className='controle' >
                 <p>{piada}</p>
+                <button onClick={carregarPiada}>Contar Fato</button>
             </div>
         </main>
     )
