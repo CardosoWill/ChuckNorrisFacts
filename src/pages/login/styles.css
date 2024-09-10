@@ -9,6 +9,15 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background-image: url(../../assets/Img/silhueta-de-cowboy-contra-a-luz-quente_23-2149334107.jpg);
+    background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat;
+    height: 80vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .form {
