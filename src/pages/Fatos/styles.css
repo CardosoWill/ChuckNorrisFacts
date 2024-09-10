@@ -1,76 +1,67 @@
-/* ChuckNorrisJokes.css */
-.style {
+
+.piadas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url('https://img.freepik.com/fotos-gratis/cowboy-indo-na-velha-cidade-ocidental_23-2150527886.jpg?w=1380&t=st=1725925918~exp=1725926518~hmac=7646d670bf7651d8f9581a78af19097acf9bc99042aec9a97cdc6f07036df486');
+  background-size: cover;
+  background-position: center; 
+  background-repeat: no-repeat;
+  height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  background: linear-gradient(135deg, #ff5f6d, #ffc371);
-  color: #fff;
-  font-family: 'Roboto', sans-serif;
-  padding: 20px;
-  text-align: center;
-  animation: fadeIn 1.5s ease-in-out;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-h1 {
-  font-size: 3rem;
-  margin-bottom: 20px;
-  background: linear-gradient(45deg, #ffcc00, #ff6b6b);
-  -webkit-background-clip: text;
-  color: transparent;
-  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
-  animation: glow 2s infinite ease-in-out;
+.piadas .controle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-select {
+.piadas select {
   padding: 15px;
-  margin: 20px 0;
+  margin: 20px 10px 20px 0;
   font-size: 1.2rem;
   border-radius: 10px;
   border: none;
-  background-color: rgba(0, 0, 0, 0.2);
-  color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
+  background-color: rgba(0, 0, 0, 0.959);
+  color: #4D6666;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.596);
 }
 
-select:hover {
-  transform: scale(1.1);
-  background-color: rgba(0, 0, 0, 0.5);
+.piadas select:hover {
+  transform: scale(1.05);
+  background-color: rgba(0, 0, 0, 0.842);
 }
 
-button {
+.piadas button {
+  margin: 0;
+  margin-left: 20px;
   padding: 12px 30px;
-  margin-top: 20px;
-  font-size: 1.5rem;
-  background: linear-gradient(45deg, #ff6b6b, #f0e130);
+  font-size: 20px;
+  background: #E65939;
   color: #fff;
   border: none;
   border-radius: 30px;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-  transition: transform 0.3s ease, background 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.705);
 }
 
-button:hover {
-  background: linear-gradient(45deg, #ff8c00, #ffd700);
-  transform: scale(1.1);
+.piadas button:hover {
+  background: #e659396c;
 }
 
-button:disabled {
-  background-color: #888;
-  cursor: not-allowed;
-}
-
-p {
+.piadas p {
+  color: #FA6D46;
   margin-top: 20px;
-  font-size: 1.8rem;
-  line-height: 1.6;
+  font-size: 20px;
   max-width: 700px;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.712);
   padding: 20px;
   border-radius: 20px;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
-  animation: float 3s ease-in-out infinite;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.219);
+  text-align: center;
 }

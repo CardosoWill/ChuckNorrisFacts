@@ -1,0 +1,35 @@
+
+.sobre {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url('https://img.freepik.com/fotos-gratis/cowboy-indo-na-velha-cidade-ocidental_23-2150527880.jpg?w=1380&t=st=1725927070~exp=1725927670~hmac=c913288e233784f374466cf8be879e56a133da1e3384db1c27bdeadca47aa376');
+    background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+  .sobre h2{
+    color: #ff9500;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.438);
+    box-shadow: 0 8px 15px rgb(0, 0, 0);
+  }
+  .sobre p {
+    color: #F5A025;
+    margin-top: 20px;
+    font-size: 20px;
+    max-width: 700px;
+    background-color: rgba(0, 0, 0, 0.712);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.219);
+    text-align: center;
+  }
+  

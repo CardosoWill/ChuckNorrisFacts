@@ -3,7 +3,7 @@ import './styles.css';
 
 export default function Header() {
     return (
-        <header id="cabecalho">
+        <header className="cabecalho">
             <h1>feitos de Chuck Norris</h1>
             
             <nav>
