@@ -3,10 +3,9 @@ import React, { useState, useEffect } from 'react';
 
 export default function ChuckNorrisJokes() {
     const [categoria, setCategoria] = useState('');
-    const [piada, setPiada] = useState('Escolha uma categoria para ouvir uma piada!');
+    const [piada, setPiada] = useState('Escolha uma categoria para ouvir um Fato!');
     const [categorias, setCategorias] = useState([]);
 
-    // Carregar as categorias disponíveis da API ao montar o componente
     useEffect(() => {
         async function carregarCategorias() {
             try {
@@ -20,7 +19,6 @@ export default function ChuckNorrisJokes() {
         carregarCategorias();
     }, []);
 
-    // Função para buscar uma piada com base na categoria
     async function carregarPiada() {
         if (!categoria) return;
 
@@ -35,19 +33,20 @@ export default function ChuckNorrisJokes() {
     }
 
     return (
-        <div className="chuck-norris-jokes">
-            <h1>Piadas do Chuck Norris</h1>
-            <select value={categoria} onChange={(e) => setCategoria(e.target.value)}>
-                <option value="">Selecione uma categoria</option>
-                {categorias.map((cat) => (
-                    <option key={cat} value={cat}>
-                        {cat}
-                    </option>
-                ))}
-            </select>
-            <button onClick={carregarPiada} disabled={!categoria}>
-                Contar Piada
-            </button>
+        <div className="piadas">
+            <div className='controle'>
+                <select value={categoria} onChange={(e) => setCategoria(e.target.value)}>
+                    <option value="">Selecione uma categoria</option>
+                    {categorias.map((cat) => (
+                        <option key={cat} value={cat}>
+                            {cat}
+                        </option>
+                    ))}
+                </select>
+                <button onClick={carregarPiada} disabled={!categoria}>
+                    Contar Fato
+                </button>
+            </div>
             <p>{piada}</p>
         </div>
     );
