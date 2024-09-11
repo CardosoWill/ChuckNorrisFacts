@@ -56,9 +56,9 @@ nav ul li:hover {
 
 a {
     text-decoration: none;
-    color: #555; /* Cor suave para os links */
+    color: #555;
 }
 
 a:hover {
-    color: #0077b6; /* Azul mais forte ao passar o mouse */
+    color: #0077b6;
 }

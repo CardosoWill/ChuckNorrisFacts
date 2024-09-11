@@ -1,7 +1,7 @@
 import './styles.css';
 import React, { useState } from 'react';
 
-export default function Home() {
+export default function Piadas() {
 
     const [piada, setPiada] = useState('Clique no botão para ouvir uma piada aleatória!');
 
@@ -17,7 +17,7 @@ export default function Home() {
     }
 
     return (
-        <main className='home'>
+        <main className='piada'>
             <h2>Algumas <s>piadas</s> FATOS sobre o Chuck Norris</h2>
             <div className='controle' >
                 <p>{piada}</p>

@@ -1,9 +1,4 @@
-
-::selection {
-    background-color: gray;
-}
-
-.container {
+.login-container {
     margin: 0 auto;
     display: flex;
     justify-content: center;
@@ -11,79 +6,71 @@
     height: 100vh;
     background-image: url(../../assets/Img/silhueta-de-cowboy-contra-a-luz-quente_23-2149334107.jpg);
     background-size: cover;
-    background-position: center; 
+    background-position: center;
     background-repeat: no-repeat;
-    height: 80vh;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
-
-.form {
+  }
+  
+  .login-form {
     width: 400px;
-    padding: 2rem;
     background-image: linear-gradient(to bottom, #424242, #212121);
+    padding: 20px;
+    border-radius: 0.5rem;
     display: flex;
-    align-items: center;
     flex-direction: column;
-    border-radius: 0.5rem;
-}
-
-.title {
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .login-title {
     color: wheat;
-    margin-bottom: 2rem;
     font-size: 2rem;
-}
-
-.input {
-    margin: 0.5rem 0;
-    padding: 1rem;
+    margin-bottom: 10px;
+  }
+  
+  .login-input {
     width: 100%;
-    background-color: inherit;
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+    background-color: #333;
     color: wheat;
-    border: none;
-    outline: none;
     border-bottom: 1px solid wheat;
-    transition: all 400ms;
-}
-
-.input:hover {
-    background-color: #424242;
-    border: none;
+    transition: background-color 400ms;
     border-radius: 0.5rem;
-}
-
-.btn {
+  }
+  
+  .login-input:hover {
+    background-color: #424242;
+  }
+  
+  .login-btn {
     height: 3rem;
     width: 100%;
-    margin-top: 1rem;
-    background-color: #555;
-    color: white;
-    border-radius: 0.5rem;
+    background-color: wheat;
     border: none;
+    border-radius: 0.5rem;
     font-size: 1.2rem;
-    transition: all 300ms ease;
     cursor: pointer;
-}
-
-.btn:hover {
-    background-color: #777; 
-}
-
-.register-link {
-    margin-top: 1rem;
-    color: wheat;
+    transition: background-color 400ms;
+  }
+  
+  .login-btn:hover {
+    background-color: antiquewhite;
+  }
+  
+  .login-signin {
     font-size: 0.9rem;
-}
-
-.register-link .link {
-    color: #00f;
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-.register-link .link:hover {
-    color: #007bff;
+    color: #aaa;
+    margin-top: 1rem;
+  }
+  
+  .login-link {
+    color: #00bfff;
     text-decoration: none;
-}
+  }
+  
+  .login-link:hover {
+    text-decoration: underline;
+  }
+  
