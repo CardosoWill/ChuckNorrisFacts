@@ -13,6 +13,7 @@ export default function ChuckNorrisJokes() {
             try {
                 const response = await fetch('https://api.chucknorris.io/jokes/categories');
                 const data = await response.json();
+                console.log(data);
                 setCategorias(data);
             } catch (error) {
                 console.error('Erro ao carregar categorias:', error);
