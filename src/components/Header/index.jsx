@@ -3,16 +3,19 @@ import './styles.css';
 
 export default function Header() {
     return (
-        <header id="cabecalho">
+        <header className="cabecalho">
             <h1>feitos de Chuck Norris</h1>
             
             <nav>
                 <ul>
-                    <Link to="/">
-                        <li>Login</li>
+                   <Link to="/">
+                        <li>Welcome</li>
                     </Link>
-                    <Link to="/home">
-                        <li>Home</li>
+                    <Link to="/login">
+                        <li>Logout</li>
+                    </Link>
+                    <Link to="/piadas">
+                        <li>Piadas</li>
                     </Link>
                     <Link to="/about">
                         <li>Sobre</li>
