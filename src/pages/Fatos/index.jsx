@@ -29,20 +29,20 @@ export default function ChuckNorrisJokes() {
             const response = await fetch(`https://api.chucknorris.io/jokes/random?category=${categoria}`);
             const data = await response.json();
 
-            const teste = await translate(data.value, "pt");
+            const traduzido = await translate(data.value, "pt");
             
             if(categoria == "religion"){
                 const correcao = "Essa píada é muito pesada para que possa ser exibida infelismente chuck Norris não tem filtros";
                 setPiada(correcao);
             }else if(categoria == "explicit"){
                 if(idade > 1000){
-                    setPiada(teste);
+                    setPiada(traduzido);
                 }else{
                     const correcao = "Essa píada é muito pesada você precisa ter mais de 1000 anos para ler";
                     setPiada(correcao);
                 }
             }else{
-                setPiada(teste);
+                setPiada(traduzido);
             }
             
         } catch (error) {
