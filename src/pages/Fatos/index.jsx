@@ -6,20 +6,21 @@ translate.engine = "google";//"yandex", "libre", "deepl"
 export default function ChuckNorrisJokes() {
     const [categoria, setCategoria] = useState('');
     const [piada, setPiada] = useState('Escolha uma categoria para ouvir um Fato!');
-    const [categorias] = useState(['animal', 'carreira', 'celebridade', 'desenvolvimento', 'explícito', 'moda', 'comida', 'história', 'dinheiro', 'filme', 'música', 'político', 'religião', 'ciência', 'esporte', 'viagem']);
+    const [categorias, setCategorias] = useState([]);
 
-   /* useEffect(() => {
+    useEffect(() => {
         async function carregarCategorias() {
             try {
                 const response = await fetch('https://api.chucknorris.io/jokes/categories');
                 const data = await response.json();
+                console.log(data);
                 setCategorias(data);
             } catch (error) {
                 console.error('Erro ao carregar categorias:', error);
             }
         }
         carregarCategorias();
-    }, []);*/
+    }, []);
       
     async function carregarPiada() {
         if (!categoria) return 
@@ -31,10 +32,10 @@ export default function ChuckNorrisJokes() {
 
             const traduzido = await translate(data.value, "pt");
             
-            if(categoria == "religião"){
+            if(categoria == "religion"){
                 const correcao = "Essa píada é muito pesada para que possa ser exibida infelismente chuck Norris não tem filtros";
                 setPiada(correcao);
-            }else if(categoria == "explícito"){
+            }else if(categoria == "explicit"){
                 if(idade > 1000){
                     setPiada(traduzido);
                 }else{
