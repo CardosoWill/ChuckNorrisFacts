@@ -67,8 +67,8 @@ class UserController {
 
 
     // ========================= Atualiza um usuario no banco ========================= //
-    async updateUser(id, name, email, password) {
-        if (!id || !name || !email || !password) {
+    async updateUser(id, nome, email, password) {
+        if (!id || !nome || !email || !password) {
             throw new Error("Id, name, email e password são obrigatórios.");
         }
 

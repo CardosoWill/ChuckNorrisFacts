@@ -36,6 +36,19 @@ class UserApi {
             res.status(400).send('Deu erro')
         }
     }
+
+        // ========================= Buscar por ID ========================= //
+        async userFind(req, res) {
+
+            try {
+                const users = await UserController.findUser(id)
+                res.send({ users });
+            } catch (e) {
+                console.log(e)
+                res.status(400).send('Deu erro')
+            }
+        }
+    
     // ========================= Atualizar ========================= //
     async updateUser(req, res) {
         const { id } = req.params

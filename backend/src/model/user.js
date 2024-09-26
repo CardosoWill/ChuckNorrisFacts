@@ -28,4 +28,4 @@ class UserModel {
 
 }
 
-module.exports = new UserModel().model;
+module.exports = (new UserModel()).model;
