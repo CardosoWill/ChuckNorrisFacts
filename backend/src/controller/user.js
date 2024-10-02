@@ -8,13 +8,17 @@ class UserController {
 
     // ========================= Validação de Login ========================= //
     async login(email, password) {
+        if (email === undefined || password === undefined) {
+            throw new Error('Email e senha são obrigatórios.')
+        }
+
         const userLogged = await UserModel.findOne({ where: { email } });
 
         if (!userLogged) {
             throw new Error("Email ou senha inválido. Tente novamente!")
         }
 
-        const validPassword = userLogged.password === password;
+        const validPassword = bcrypt.compare(password, userLogged.password) 
 
         if (!validPassword) {
             throw new Error("Email ou senha inválido. Tente novamente!")
@@ -65,17 +69,10 @@ class UserController {
         return userValue
     }
 
-
     // ========================= Atualiza um usuario no banco ========================= //
     async updateUser(id, nome, email, password) {
         if (!id || !nome || !email || !password) {
             throw new Error("Id, name, email e password são obrigatórios.");
-        }
-
-        const emailVerific = await UserModel.findOne({ where: { email } });
-
-        if (emailVerific) {
-            throw new Error("Email já cadastrado.");
         }
 
         const userValue = await this.findUser(id)
@@ -87,7 +84,6 @@ class UserController {
 
         return userValue
     }
-
 
     async deleteUser(id) {
         if (id === undefined) {
