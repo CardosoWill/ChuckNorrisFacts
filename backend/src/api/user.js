@@ -39,7 +39,7 @@ class UserApi {
 
         // ========================= Buscar por ID ========================= //
         async userFind(req, res) {
-
+            const { id } = req.params
             try {
                 const users = await UserController.findUser(id)
                 res.send({ users });

@@ -14,6 +14,8 @@
     "express": "^4.21.0",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.3",
+    "piii": "^4.0.2",
+    "save": "^2.9.0",
     "sequelize": "^6.37.3"
   }
 }
