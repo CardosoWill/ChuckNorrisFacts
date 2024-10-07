@@ -13,7 +13,6 @@ class UserModel {
                     type: database.db.Sequelize.STRING,
                     allowNull: false
                 },
-
                 email: {
                     type: database.db.Sequelize.STRING,
                     allowNull: false,
@@ -22,7 +21,14 @@ class UserModel {
                 password: {
                     type: database.db.Sequelize.STRING,
                     allowNull: false
-                }
+                },
+                permissao: {
+                    type: database.db.Sequelize.STRING,
+                    // sendo ele um enum admin e user
+                    validate: {
+                      isIn: [["admin", "user"]],
+                    },
+                  },
             })
         }
 

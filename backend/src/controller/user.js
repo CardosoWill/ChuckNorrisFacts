@@ -1,6 +1,6 @@
 const UserModel = require('../model/user')
 const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 
 const salts = 12;
 class UserController {
@@ -45,6 +45,7 @@ class UserController {
             nome,
             email,
             password: passwordHashed,
+            permissao: "user",   
         })
         return userValue;
     }
@@ -61,36 +62,62 @@ class UserController {
         }
 
         const userValue = await UserModel.findByPk(id)
-        
+      
         if (!userValue) {
             throw new Error('Usuário não encontrado.')
         }
 
         return userValue
     }
-
     // ========================= Atualiza um usuario no banco ========================= //
-    async updateUser(id, nome, email, password) {
-        if (!id || !nome || !email || !password) {
-            throw new Error("Id, name, email e password são obrigatórios.");
+    async updateUser(token, nome, email, password) {
+        if (!token || !nome || !email || !password) {
+            throw new Error("Token, nome, email e senha são obrigatórios.");
+        }
+    
+        let decoded;
+        try {
+            decoded = await jwt.verify(token, "MeuSegredo123!");
+        } catch (err) {
+            throw new Error("Falha na verificação do token: " + err.message);
         }
 
-        const userValue = await this.findUser(id)
+        const user = await this.findUser(decoded.id);
+        if (!user) {
+            throw new Error("Usuário não encontrado.");
+        }
+        // Verifica se o novo email já está em uso
+        const existingUser = await UserModel.findOne({ where: { email } });
+        if (existingUser && existingUser.id !== user.id) {
+            throw new Error("Email já está em uso por outro usuário.");
+        }
 
-        userValue.nome = nome
-        userValue.email = email
-        userValue.password = await bcrypt.hash(password, salts)
-        userValue.save()
-
-        return userValue
+        user.nome = nome;
+        if (user.email !== email) {
+            user.email = email;
+        }
+        user.password = await bcrypt.hash(password, salts)
+        user.save();
+   
+        return user;
     }
 
-    async deleteUser(id) {
-        if (id === undefined) {
-            throw new Error('Id é obrigatório.')
+    async deleteUser(token) {
+        if (!token) {
+            throw new Error("Token, é obrigatórios.");
         }
-        const userValue = await this.findUser(id)
-        userValue.destroy()
+        let decoded;
+        try {
+            decoded = await jwt.verify(token, "MeuSegredo123!");
+        } catch (err) {
+            throw new Error("Falha na verificação do token: " + err.message);
+        }
+
+        const user = await this.findUser(decoded.id);
+        if (!user) {
+            throw new Error("Usuário não encontrado.");
+        }
+        await user.destroy()
 
         return
     }
