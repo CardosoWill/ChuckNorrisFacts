@@ -5,9 +5,9 @@ const authMiddleware = require('../middleware/auth');
 const jokeRouter = express.Router();
 
 jokeRouter.get('/random',JokeApi.getRandomJoke);
-jokeRouter.post('/', authMiddleware("user","admin"),JokeApi.createJoke);
-jokeRouter.get('/',authMiddleware("admin"), JokeApi.findAllJokes);
-jokeRouter.get('/:idFatos', authMiddleware("user","admin"),mJokeApi.findJokeById);
+jokeRouter.post('/', authMiddleware("admin"),JokeApi.createJoke);
+jokeRouter.get('/',authMiddleware("user","admin"), JokeApi.findAllJokes);
+jokeRouter.get('/:idFatos', authMiddleware("user","admin"),JokeApi.findJokeById);
 jokeRouter.put('/:idFatos', authMiddleware("admin"),JokeApi.updateJoke);
 jokeRouter.delete('/:idFatos',authMiddleware("admin"), JokeApi.deleteJoke);
 
