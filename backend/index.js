@@ -1,19 +1,23 @@
 const express = require('express');
+const cors = require("cors");
+const database = require('./src/config/database');
+
 const UserApi = require('./src/api/user')
 const useRouter = require('./src/routes/user');
 const jokeRouter = require('./src/routes/fatos');
-const database = require('./src/config/database');
+const authMiddleware = require('./src/middleware/auth');
 
 const app = express();
-
-app.use(express.json({ limit: '50mb' }));
+app.use(express.json());
+app.use(cors());
 
 // Rota sem token
 app.post('/api/v1/login', UserApi.login)
+app.post('/api/v1/create', UserApi.createUser);
 
 // Rota com token
-app.use("/api/v1/user", useRouter);
-app.use("/api/v1/jokes", jokeRouter);
+app.use("/api/v1/user", authMiddleware(),useRouter);
+app.use("/api/v1/jokes", authMiddleware(),jokeRouter);
 
 
 database.db

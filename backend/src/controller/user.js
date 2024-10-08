@@ -1,6 +1,6 @@
 const UserModel = require('../model/user')
 const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 
 const salts = 12;
 class UserController {
@@ -27,8 +27,24 @@ class UserController {
         return jwt.sign({ id: userLogged.id, email: userLogged.email }, 'MeuSegredo123!', { expiresIn: 60 * 60 })
     }
 
+
+    async validToken(token) {
+        if (token ==='') {
+            return ("user");
+        }else{
+            let decoded;
+            decoded = await jwt.verify(token, "MeuSegredo123!");
+            const user = await this.findUser(decoded.id);
+            if(user.permissao == "admin") {
+                return ("admin");
+            }else{
+                throw new Error("Permissão não autorizada!")
+            }            
+        }
+    }
     // ========================= Criar um novo user ========================= //
-    async createUser(nome, email, password) {
+    async createUser(token, nome, email, password) {
+
         if (!nome || !email || !password) {
             throw new Error("Name, email e password são obrigatórios.")
         }
@@ -40,11 +56,15 @@ class UserController {
         }
 
         const passwordHashed = await bcrypt.hash(password, salts)
-
+        
+        const user = await this.validToken(token);
+    
         const userValue = await UserModel.create({
             nome,
             email,
             password: passwordHashed,
+            permissao: user, 
+            status: "desbloqueado"  
         })
         return userValue;
     }
@@ -61,36 +81,62 @@ class UserController {
         }
 
         const userValue = await UserModel.findByPk(id)
-        
+      
         if (!userValue) {
             throw new Error('Usuário não encontrado.')
         }
 
         return userValue
     }
-
     // ========================= Atualiza um usuario no banco ========================= //
-    async updateUser(id, nome, email, password) {
-        if (!id || !nome || !email || !password) {
-            throw new Error("Id, name, email e password são obrigatórios.");
+    async updateUser(token, nome, email, password) {
+        if (!token || !nome || !email || !password) {
+            throw new Error("Token, nome, email e senha são obrigatórios.");
+        }
+    
+        let decoded;
+        try {
+            decoded = await jwt.verify(token, "MeuSegredo123!");
+        } catch (err) {
+            throw new Error("Falha na verificação do token: " + err.message);
         }
 
-        const userValue = await this.findUser(id)
+        const user = await this.findUser(decoded.id);
+        if (!user) {
+            throw new Error("Usuário não encontrado.");
+        }
+        // Verifica se o novo email já está em uso
+        const existingUser = await UserModel.findOne({ where: { email } });
+        if (existingUser && existingUser.id !== user.id) {
+            throw new Error("Email já está em uso por outro usuário.");
+        }
 
-        userValue.nome = nome
-        userValue.email = email
-        userValue.password = await bcrypt.hash(password, salts)
-        userValue.save()
-
-        return userValue
+        user.nome = nome;
+        if (user.email !== email) {
+            user.email = email;
+        }
+        user.password = await bcrypt.hash(password, salts)
+        user.save();
+   
+        return user;
     }
 
-    async deleteUser(id) {
-        if (id === undefined) {
-            throw new Error('Id é obrigatório.')
+    async deleteUser(token) {
+        if (!token) {
+            throw new Error("Token, é obrigatórios.");
         }
-        const userValue = await this.findUser(id)
-        userValue.destroy()
+        let decoded;
+        try {
+            decoded = await jwt.verify(token, "MeuSegredo123!");
+        } catch (err) {
+            throw new Error("Falha na verificação do token: " + err.message);
+        }
+
+        const user = await this.findUser(decoded.id);
+        if (!user) {
+            throw new Error("Usuário não encontrado.");
+        }
+        await user.destroy()
 
         return
     }
