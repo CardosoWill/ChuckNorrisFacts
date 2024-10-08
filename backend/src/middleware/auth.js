@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
-const user = require('../controller/user')
+const user = require('../controller/user');
 
 function authMiddleware(roles = []) {
-  return (req, res, next) => {
+  return async (req, res, next) => {
     const token = req.headers["authorization"];
 
     if (!token) {
@@ -14,20 +14,20 @@ function authMiddleware(roles = []) {
         return res.status(401).json({ mensagem: "Token inválido" });
       }
 
-      const userLogged = await user.findUser(decoded.id)
+      const userLogged = await user.findUser(decoded.id);
 
-      if(!userLogged) {
+      if (!userLogged) {
         return res.status(404).json({ mensagem: "Usuário não encontrado" });
       }
-      if(roles.length && !roles.includes(userLogged.permissao)){
+
+      if (roles.length && !roles.includes(userLogged.permissao)) {
         return res.status(403).json({ mensagem: "Sem permissão" });
       }
 
       req.session = decoded;
-
       next();
     });
-  }
+  };
 }
 
 module.exports = authMiddleware;

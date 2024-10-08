@@ -15,15 +15,17 @@ class UserApi {
 
     // ========================= Criar ========================= //
     async createUser(req, res) {
+        const token = req.headers["authorization"];
         const { nome, email, password } = req.body
 
         try {
-            const user = await UserController.createUser(nome, email, password)
+            const user = await UserController.createUser(token,nome, email, password)
             return res.status(201).send(user)
         } catch (e) {
             return res.status(400).send({ error: `Erro ao criar usuário ${e.message}` })
         }
     }
+
 
     // ========================= Buscar todos ========================= //
     async userFindAll(req, res) {

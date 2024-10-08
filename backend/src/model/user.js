@@ -24,11 +24,16 @@ class UserModel {
                 },
                 permissao: {
                     type: database.db.Sequelize.STRING,
-                    // sendo ele um enum admin e user
                     validate: {
-                      isIn: [["admin", "user"]],
+                      isIn: [["admin", "user","bloqueado"]],
                     },
                   },
+                status: {
+                type: database.db.Sequelize.STRING,
+                validate: {
+                    isIn: [["bloqueado", "desbloqueado"]],
+                },
+                },
             })
         }
 

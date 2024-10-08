@@ -13,6 +13,7 @@ app.use(cors());
 
 // Rota sem token
 app.post('/api/v1/login', UserApi.login)
+app.post('/api/v1/create', UserApi.createUser);
 
 // Rota com token
 app.use("/api/v1/user", authMiddleware(),useRouter);

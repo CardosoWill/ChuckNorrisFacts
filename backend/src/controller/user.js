@@ -27,8 +27,24 @@ class UserController {
         return jwt.sign({ id: userLogged.id, email: userLogged.email }, 'MeuSegredo123!', { expiresIn: 60 * 60 })
     }
 
+
+    async validToken(token) {
+        if (token ==='') {
+            return ("user");
+        }else{
+            let decoded;
+            decoded = await jwt.verify(token, "MeuSegredo123!");
+            const user = await this.findUser(decoded.id);
+            if(user.permissao == "admin") {
+                return ("admin");
+            }else{
+                throw new Error("Permissão não autorizada!")
+            }            
+        }
+    }
     // ========================= Criar um novo user ========================= //
-    async createUser(nome, email, password) {
+    async createUser(token, nome, email, password) {
+
         if (!nome || !email || !password) {
             throw new Error("Name, email e password são obrigatórios.")
         }
@@ -40,12 +56,15 @@ class UserController {
         }
 
         const passwordHashed = await bcrypt.hash(password, salts)
-
+        
+        const user = await this.validToken(token);
+    
         const userValue = await UserModel.create({
             nome,
             email,
             password: passwordHashed,
-            permissao: "user",   
+            permissao: user, 
+            status: "desbloqueado"  
         })
         return userValue;
     }
