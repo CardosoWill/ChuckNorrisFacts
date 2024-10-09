@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './styles.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,7 +10,21 @@ export default function Register() {
     event.preventDefault();
     navigate('/piadas');
   };
-  
+
+  const[nome, setNome] = useState('');
+  const[email, setEmail] = useState('');
+  const[senha, setSenha] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const response = await createUser({nome, email, senha})
+    console.log(response)
+    
+    if(response.id){
+      navigate('/login')
+    }
+  }
   return (
     <main>
       <div className="register-container">
