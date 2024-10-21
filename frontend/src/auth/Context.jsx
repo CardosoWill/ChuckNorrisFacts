@@ -19,7 +19,7 @@ const getRole = (token) => {
         return false
     }
 }
-export const authContext = createContext()
+export const AuthContext = createContext()
 
 export const AuthProvider = (children) => {7
     const [ token, setToken ] = useState(null)
@@ -49,8 +49,8 @@ export const AuthProvider = (children) => {7
     }, [])
 
     return(
-        <authContext.Provider value={{ token, login, logout, role }}>
+        <AuthContext.Provider value={{ token, login, logout, role }}>
         {children}
-        </authContext.Provider>
-    )
-}
+        </AuthContext.Provider>
+    );
+};
