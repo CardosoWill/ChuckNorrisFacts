@@ -9,22 +9,21 @@ class UserController {
 
     // ========================= Validação de Login ========================= //
     async login(email, password) {
-        if (email === undefined || password === undefined) {
+        if (email === undefined || password === undefined || password === "") {
             throw new Error('Email e senha são obrigatórios.')
         }
-
         const userLogged = await UserModel.findOne({ where: { email } });
 
         if (!userLogged) {
             throw new Error("Email ou senha inválido. Tente novamente!")
         }
-
-        const validPassword = bcrypt.compare(password, userLogged.password) 
-
+        
+        const validPassword = await bcrypt.compare(password, userLogged.password) 
+        console.log(validPassword)
         if (!validPassword) {
             throw new Error("Email ou senha inválido. Tente novamente!")
         }
-
+        
         return jwt.sign({ id: userLogged.id, email: userLogged.email }, 'MeuSegredo123!', { expiresIn: 60 * 60 })
     }
 
@@ -44,7 +43,7 @@ class UserController {
         }
     }
     // ========================= Criar um novo user ========================= //
-    async createUser(token, nome, email, password) {
+    async createUser(nome, email, password,token) {
 
         if (!nome || !email || !password) {
             throw new Error("Name, email e password são obrigatórios.")
@@ -52,13 +51,14 @@ class UserController {
 
         const emailVerific = await UserModel.findOne({ where: { email } });
 
+        console.log("Email já cadastrado");
         if (emailVerific) {
             throw new Error("Email já cadastrado.");
         }
-
         const passwordHashed = await bcrypt.hash(password, salts)
-        
+      
         const user = await this.validToken(token);
+        console.log(user);
         //const user = "user"
         const userValue = await UserModel.create({
             nome,

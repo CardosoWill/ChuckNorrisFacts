@@ -8,7 +8,7 @@ export default function SignUp() {
   const navigate = useNavigate();
 
   const handleBackClick = () => {
-    navigate(-1);
+    navigate('/login');
   };
 
   const [nome, setNome] = useState('');

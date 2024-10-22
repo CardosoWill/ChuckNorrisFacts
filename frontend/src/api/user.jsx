@@ -27,6 +27,8 @@ export const getUsers = async () => {
 
 export const loginUser = async (email, password) => {
     const body = { email, password }
-    const response = await api.post('/api/v1/login', body)
+    const response = await api.post('/api/v1/login', body, {
+        headers: { 'Content-Type': 'application/json' },
+    });
     return response.data
 }

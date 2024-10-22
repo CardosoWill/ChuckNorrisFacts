@@ -5,7 +5,7 @@ import { authContext } from '../../auth/Context';
 import { loginUser } from '../../api/user';
 
 export default function Login() {
-  const  Login  = useContext(authContext)
+  const  { login }  = useContext(authContext)
   const navigate = useNavigate();
 
   const apertaBotao = (event) => {
@@ -33,7 +33,6 @@ export default function Login() {
 
     try {
       const response = await loginUser(email, password)
-
       if (response.token) {
         login(response.token);
         navigate('/')

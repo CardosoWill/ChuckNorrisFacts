@@ -24,18 +24,7 @@ export const authContext = createContext()
 export const AuthProvider = ({children}) => {7
     const [ token, setToken ] = useState(null)
     const [ role, setRole ] = useState(null)
-
-    const login = (newToken) => {
-        setToken(newToken)
-        setRole(getRole(newToken))
-        localStorage.setItem('token', newToken)
-    }
-    const logout = () => {
-        setToken(null)
-        setRole(null) 
-        localStorage.removeItem('token')
-    }
-
+    
     useEffect(() => {
         const storedToken  = localStorage.getItem('token')
         if(storedToken  && isValidToken(storedToken )){
@@ -47,6 +36,18 @@ export const AuthProvider = ({children}) => {7
             localStorage.removeItem('token')
         }
     }, [])
+    
+    const login = (newToken) => {
+        setToken(newToken)
+        setRole(getRole(newToken))
+        localStorage.setItem('token', newToken)
+    }
+    const logout = () => {
+        setToken(null);
+        setRole(null); 
+        localStorage.removeItem('token');
+    }
+
 
     return(
         <authContext.Provider value={{ token, login, logout, role }}>
