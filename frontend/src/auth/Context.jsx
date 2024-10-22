@@ -19,9 +19,9 @@ const getRole = (token) => {
         return false
     }
 }
-export const AuthContext = createContext()
+export const authContext = createContext()
 
-export const AuthProvider = (children) => {7
+export const AuthProvider = ({children}) => {7
     const [ token, setToken ] = useState(null)
     const [ role, setRole ] = useState(null)
 
@@ -37,10 +37,10 @@ export const AuthProvider = (children) => {7
     }
 
     useEffect(() => {
-        const storege = localStorage.getItem('token')
-        if(storage && isValidToken(storege)){
-            setToken(storege);
-            setRole(getRole(storege));
+        const storedToken  = localStorage.getItem('token')
+        if(storedToken  && isValidToken(storedToken )){
+            setToken(storedToken );
+            setRole(getRole(storedToken ));
         } else {
             setToken(null)
             setRole(null)
@@ -49,8 +49,8 @@ export const AuthProvider = (children) => {7
     }, [])
 
     return(
-        <AuthContext.Provider value={{ token, login, logout, role }}>
+        <authContext.Provider value={{ token, login, logout, role }}>
         {children}
-        </AuthContext.Provider>
+        </authContext.Provider>
     );
 };

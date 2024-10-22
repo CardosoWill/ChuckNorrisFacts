@@ -3,10 +3,9 @@ import './styles.css';
 import { useNavigate } from 'react-router-dom';
 import { authContext } from '../../auth/Context';
 import { loginUser } from '../../api/user';
-import { toast } from 'react-toastify';
 
 export default function Login() {
-  const { Login } = useContext(authContext)
+  const  Login  = useContext(authContext)
   const navigate = useNavigate();
 
   const apertaBotao = (event) => {
@@ -29,7 +28,7 @@ export default function Login() {
     e.preventDefault();
 
     if (!email || !password) {
-      return toast("Informe o E-mail e senha para continuar!")
+      //return toast("Informe o E-mail e senha para continuar!")
     }
 
     try {
@@ -41,10 +40,10 @@ export default function Login() {
       }
 
     } catch (error) {
-      if (error.response.status === 403) {
+      /*if (error.response.status === 403) {
         return toast("Email ou senha invalido");
       }
-      return toast("Erro inesperado, tente novamente mais tarde")
+      return toast("Erro inesperado, tente novamente mais tarde")*/
     }
   };
 

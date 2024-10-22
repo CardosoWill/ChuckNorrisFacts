@@ -1,6 +1,7 @@
 const UserModel = require('../model/user')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');
+const user = require('../model/user');
 
 const salts = 12;
 class UserController {
@@ -29,7 +30,7 @@ class UserController {
 
 
     async validToken(token) {
-        if (token ==='') {
+        if (token === undefined) {
             return ("user");
         }else{
             let decoded;
@@ -58,7 +59,7 @@ class UserController {
         const passwordHashed = await bcrypt.hash(password, salts)
         
         const user = await this.validToken(token);
-    
+        //const user = "user"
         const userValue = await UserModel.create({
             nome,
             email,
