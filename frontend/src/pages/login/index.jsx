@@ -35,7 +35,7 @@ export default function Login() {
       const response = await loginUser(email, password)
       if (response.token) {
         login(response.token);
-        navigate('/')
+        navigate('/fatos')
       }
 
     } catch (error) {
