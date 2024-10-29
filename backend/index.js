@@ -8,7 +8,6 @@ const jokeRouter = require('./src/routes/fatos');
 const authMiddleware = require('./src/middleware/auth');
 
 const app = express();
-
 app.use(express.json());
 app.use(cors());
 
