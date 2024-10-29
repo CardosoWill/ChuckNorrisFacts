@@ -8,12 +8,14 @@ const jokeRouter = require('./src/routes/fatos');
 const authMiddleware = require('./src/middleware/auth');
 
 const app = express();
+
 app.use(express.json());
 app.use(cors());
 
 // Rota sem token
 app.post('/api/v1/login', UserApi.login)
 app.post('/api/v1/create', UserApi.createUser);
+app.post('/api/v1/verify-code',UserApi.verificaCode);
 
 // Rota com token
 app.use("/api/v1/user", authMiddleware(),useRouter);
