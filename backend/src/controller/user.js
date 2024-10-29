@@ -1,7 +1,7 @@
 const UserModel = require('../model/user')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');
-const twilio = require('twilio');
+//const twilio = require('twilio');
 
 const salts = 12;
 let codes = {}
@@ -45,7 +45,7 @@ class UserController {
     async sendSms(to, message) {
         const accountSid = 'ACb1a88b268953e7a44376a547edf4680c';
         const authToken = 'db4615a3ee4e9bbe418364365a279d3d';
-        const client = twilio(accountSid, authToken);
+        //const client = twilio(accountSid, authToken);
 
         try {
             const msg = await client.messages.create({
