@@ -10,7 +10,7 @@ class Database {
         this.db = new Sequelize({
             database:"exemplo",
             host:"localhost",
-            password:"123456",
+            password:"",
             username:"root",
             dialect:"mysql"
         })

@@ -61,7 +61,7 @@ class UserController {
     }
 
     // ========================= Criar um novo user ========================= //
-    async createUser(nome, email, password,numeroCelular, token) {
+    async createUser(nome, email, password, token) {
         if (!nome || !email || !password) {
             throw new Error("Name, email e password são obrigatórios.");
         }
@@ -84,34 +84,10 @@ class UserController {
             status: "desbloqueado"
         });
 
-        const generateCode = () => {
-            //return Math.floor(100000 + Math.random() * 900000).toString();
-            return '123'
-          };
-
-        const code = generateCode();
-        codes[numeroCelular] = { code, createdAt: Date.now() };
-
-        // Enviar SMS após a criação do usuário
-        const mensagem = `Bem-vindo, ${nome}! Para continar com o cadastro incira o cod[${code}].`;
-        const enviar = await this.sendSms(numeroCelular, mensagem); // Chamada corrigida para usar this
-        console.log(enviar);
-
         return userValue;
     }
 
    
-    async verificaCode(numeroCelular,code){          
-        numeroCelular = 1;
-        const storedCode = '123';
-
-        if (storedCode === code) {
-        return '1'
-        } else {
-        return '0' 
-        }
-    }
-
     // ========================= Pega todos os users ========================= //
     async findAll() {
         return UserModel.findAll();
