@@ -40,26 +40,6 @@ class UserController {
             }
         }
     }
-
-    // ========================= Função para enviar SMS ========================= //
-    async sendSms(to, message) {
-        const accountSid = 'ACb1a88b268953e7a44376a547edf4680c';
-        const authToken = 'db4615a3ee4e9bbe418364365a279d3d';
-        const client = twilio(accountSid, authToken);
-
-        try {
-            const msg = await client.messages.create({
-                body: message,
-                from: '+12173600244', // O número do Twilio que você obteve
-                to: to // O número de telefone do destinatário
-            });
-            console.log(`Mensagem enviada: ${msg.sid}`);
-        } catch (error) {
-            console.error(`Erro ao enviar SMS: ${error.message}`);
-        }
-        return "SMS enviado com sucesso!";
-    }
-
     // ========================= Criar um novo user ========================= //
     async createUser(nome, email, password, token) {
         if (!nome || !email || !password) {

@@ -8,7 +8,7 @@ export default function SignUp() {
   const navigate = useNavigate();
 
   const handleBackClick = () => {
-    navigate('/login');
+    navigate('/');
   };
 
   const [nome, setNome] = useState('');
@@ -21,7 +21,7 @@ export default function SignUp() {
       
       const responseApi = await createUser({ nome, email, password });
       if (responseApi.id) {
-        navigate('/verify-code');
+        navigate('/login');
       } else {
         console.log(responseApi);
       }

@@ -10,13 +10,12 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import { AuthProvider } from './auth/Context'
 import PrivateRoute from './routes/PrivateRoute'
-import VerifyCode from './pages/VerifyCode'
 
 function App() {
 
   const location = useLocation();
 
-  const showElement = location.pathname === '/login' ||  location.pathname === '/register' || location.pathname ==='/'|| location.pathname ==='/verify-code';
+  const showElement = location.pathname === '/login' ||  location.pathname === '/register' || location.pathname ==='/';
 
   return (
     <AuthProvider>
@@ -31,9 +30,7 @@ function App() {
         <Route path='/user' element={<User />} />
         <Route path='/fatos' element={<Fatos />} />
         </Route>
-        
         <Route path='/login' element={<Login />} />
-        <Route path='/verify-code' element={<VerifyCode />} />
         <Route path='/register' element={<Register />} />
       </Routes>
       {!showElement?<Footer/>:null}
