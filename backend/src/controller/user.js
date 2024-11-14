@@ -1,8 +1,9 @@
 const UserModel = require('../model/user')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');
-const twilio = require('twilio');
-
+const nodemailer = require('nodemailer');
+require('dotenv').config();
+const COD = 123;
 const salts = 12;
 let codes = {}
 class UserController {
@@ -41,40 +42,51 @@ class UserController {
         }
     }
 
-    // ========================= Função para enviar SMS ========================= //
-    async sendSms(to, message) {
-        const accountSid = 'ACb1a88b268953e7a44376a547edf4680c';
-        const authToken = 'db4615a3ee4e9bbe418364365a279d3d';
-        const client = twilio(accountSid, authToken);
+    // ========================= Função para enviar Email ========================= //
+        
+    
 
-        try {
-            const msg = await client.messages.create({
-                body: message,
-                from: '+12173600244', // O número do Twilio que você obteve
-                to: to // O número de telefone do destinatário
-            });
-            console.log(`Mensagem enviada: ${msg.sid}`);
-        } catch (error) {
-            console.error(`Erro ao enviar SMS: ${error.message}`);
-        }
-        return "SMS enviado com sucesso!";
-    }
 
     // ========================= Criar um novo user ========================= //
-    async createUser(nome, email, password,numeroCelular, token) {
+    async createUser(nome, email, password, token) {
         if (!nome || !email || !password) {
             throw new Error("Name, email e password são obrigatórios.");
         }
 
-        const emailVerific = await UserModel.findOne({ where: { email } });
+        /*const emailVerific = await UserModel.findOne({ where: { email } });
 
         if (emailVerific) {
             throw new Error("Email já cadastrado.");
-        }
+        }*/
 
         const passwordHashed = await bcrypt.hash(password, salts);
         const user = await this.validToken(token);
         console.log(user);
+    //Cria email e envia
+        const transporter = nodemailer.createTransport({
+            host: process.env.MAIL_HOST,
+            port: process.env.MAIL_PORT,
+            auth: {
+                user: process.env.MAIL_USER,
+                pass: process.env.MAIL_PASSWORD,
+            },
+            });
+        
+            const sendTestEmail = async () => {
+            try {
+                await transporter.sendMail({
+                from: '<no_replay@gmail.com>',
+                to: email,
+                subject: 'Validação de email',
+                text: 'Este é um e-mail de validação com Mailtrap! seu codigo de autenticação é:' + COD,
+                });
+                console.log('E-mail enviado com sucesso!');
+            } catch (error) {
+                console.error('Erro ao enviar e-mail:', error);
+            }
+            };
+            
+        sendTestEmail();
 
         const userValue = await UserModel.create({
             nome,
@@ -83,33 +95,16 @@ class UserController {
             permissao: user,
             status: "desbloqueado"
         });
-
-        const generateCode = () => {
-            //return Math.floor(100000 + Math.random() * 900000).toString();
-            return '123'
-          };
-
-        const code = generateCode();
-        codes[numeroCelular] = { code, createdAt: Date.now() };
-
-        // Enviar SMS após a criação do usuário
-        const mensagem = `Bem-vindo, ${nome}! Para continar com o cadastro incira o cod[${code}].`;
-        const enviar = await this.sendSms(numeroCelular, mensagem); // Chamada corrigida para usar this
-        console.log(enviar);
-
-        return userValue;
+       return userValue;
     }
 
-   
-    async verificaCode(numeroCelular,code){          
-        numeroCelular = 1;
-        const storedCode = '123';
-
-        if (storedCode === code) {
-        return '1'
-        } else {
-        return '0' 
+    async validEmailUser(tokenMFA) {
+        if (tokenMFA === undefined) {
+            console.log("03")
+            throw new Error('Token MFA é obrigatório.')
         }
+        console.log("02")
+        return tokenMFA
     }
 
     // ========================= Pega todos os users ========================= //

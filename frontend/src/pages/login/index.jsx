@@ -53,7 +53,7 @@ export default function Login() {
           <p className="login-title">Login de Usuário</p>
 
           <input className="login-input" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-          <input className="login-input" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Senha" />
+          <input className="login-input" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="password" />
 
           <button className="login-btn" type="submit" onClick={handleSubmit}>Login</button>
 

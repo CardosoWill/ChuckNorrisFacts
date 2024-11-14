@@ -7,7 +7,7 @@ export const createUser = async (user) => {
 }
 
 export const verificaCode = async (user) => {
-    const response = await api.post('/api/v1/verify-code', user)
+    const response = await api.post('/api/v1/valid', user)
     console.log(response.data)
     return response.data
 }
