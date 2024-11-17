@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './styles.css'
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { deleteUser, getContext, udateUser } from '../../api/user';
+import { deleteUser, getContext, updateUser } from '../../api/user';
 
 export default function Profile() {
   const [id, setId] = useState('');
@@ -22,14 +22,14 @@ export default function Profile() {
         setEmail(response.email)
       }
     } catch (error) {
-      toast('Erro inesperado, tente novamente mais tarde!')
+      toast('Tente novamente mais tarde!')
     }
   }
 
   const handleSaveUpdate = async () => {
     try {
       // deverá alterar o usuário
-      const response = await udateUser(id, {nome: updNome, email: updEmail});
+      const response = await updateUser({nome: updNome, email: updEmail});
       if(response.id){
         // se der certo redireciona
         setNome(updNome)
@@ -37,7 +37,7 @@ export default function Profile() {
         setIsUpdate(false)
       }
     } catch (error) {
-      toast('Erro inesperado, tente novamente mais tarde!')
+      toast('Tente novamente mais tarde!')
     }
   }
 
@@ -53,7 +53,7 @@ export default function Profile() {
 
       if(response === email) {      
         // Devera deletar usuario
-        const response = await deleteUser(id)
+        const response = await deleteUser()
         if(response){
           // se der certo redireciona
           toast("Usuário destruido")

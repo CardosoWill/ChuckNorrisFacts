@@ -4,10 +4,10 @@ const authMiddleware = require('../middleware/auth');
 
 const useRouter = express.Router();
 
-useRouter.get('/',  authMiddleware("admin"), UserApi.userFindAll);
-useRouter.get('/:id', authMiddleware("admin"), UserApi.userFind);
 useRouter.get('/context', UserApi.findContext);
-useRouter.put('/:id', UserApi.updateUser);
-useRouter.delete('/:id', UserApi.deleteUser);
+useRouter.put('/', UserApi.updateUser);
+useRouter.delete('/', UserApi.deleteUser);
+useRouter.get('/:id', authMiddleware("admin"), UserApi.userFind);
+useRouter.get('/',  authMiddleware("admin"), UserApi.userFindAll);
 
 module.exports = useRouter;

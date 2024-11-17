@@ -9,7 +9,6 @@ class UserApi {
             const token = await UserController.login(email, password) 
             res.send({ token });
         } catch (e) {
-            console.log(e)
             res.status(400).send('Erro ao logar!')
         }
     }
@@ -34,13 +33,13 @@ class UserApi {
             const users = await UserController.findAll()
             res.send({ users });
         } catch (e) {
-            console.log(e)
             res.status(400).send('Deu erro')
         }
     }
     async findContext(req, res) {
+        const token = req.headers["authorization"];
         try {
-            const user = await UserController.findUser(req?.session?.id || 0)
+            const user = await UserController.findUserContext(token)
             return res.status(200).send(user)
         } catch (e) {
             return res.status(400).send({ error: `Erro ao listar usuário ${e.message}`})
@@ -53,29 +52,28 @@ class UserApi {
                 const users = await UserController.findUser(id)
                 res.send({ users });
             } catch (e) {
-                console.log(e)
                 res.status(400).send('Deu erro')
             }
         }
     
     // ========================= Atualizar ========================= //
     async updateUser(req, res) {
-        const { id } = req.params
-        const { nome , email, password } = req.body
+        const token = req.headers["authorization"];
+        const { nome , email } = req.body
 
         try {
-            const user = await UserController.updateUser(id, nome, email, password)
+            const user = await UserController.updateUser(token, nome, email)
             return res.status(200).send(user)
         } catch (e) {
-            return res.status(400).send({ error: `Erro ao alterar usuário ${e.message}` })
+            return res.status(400).send({ error: `Erro ao alterar usuário ${e.message}`})
         }
     }
     // ========================= Deletar ========================= //
     async deleteUser(req, res) {
-        const { id } = req.params
+        const token = req.headers["authorization"];
 
         try {
-            await UserController.deleteUser(id)
+            await UserController.deleteUser(token)
             return res.status(204).send()
         } catch (e) {
             return res.status(400).send({ error: `Erro ao deletar usuário ${e.message}` })
