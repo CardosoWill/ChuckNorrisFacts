@@ -10,6 +10,8 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import { AuthProvider } from './auth/Context'
 import PrivateRoute from './routes/PrivateRoute'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
@@ -33,6 +35,18 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
       </Routes>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={3500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        style={{ width: '50%' }}
+      />
       {!showElement?<Footer/>:null}
     </AuthProvider>
   )

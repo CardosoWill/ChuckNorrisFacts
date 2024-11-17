@@ -3,6 +3,7 @@ import './styles.css';
 import { useNavigate } from 'react-router-dom';
 import { createUser } from '../../api/user';
 import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -48,6 +49,7 @@ export default function SignUp() {
         
         <button className="signup-btn" type="submit">Cadastrar-se</button>
         <button className="signup-btn back-button" type="button" onClick={(e) => { e.preventDefault(); handleBackClick(); }}>Voltar</button>
+        
       </form>
     </div>
   );

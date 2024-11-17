@@ -1,10 +1,9 @@
 const UserModel = require('../model/user')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');
-const twilio = require('twilio');
+require('dotenv').config();
 
-const salts = 12;
-let codes = {}
+const saltos = parseInt(process.env.SALTS)
 class UserController {
     // ========================= Validação de Login ========================= //
     async login(email, password) {
@@ -23,7 +22,7 @@ class UserController {
             throw new Error("Email ou senha inválido. Tente novamente!")
         }
 
-        return jwt.sign({ id: userLogged.id, email: userLogged.email }, 'MeuSegredo123!', { expiresIn: 60 * 60 })
+        return jwt.sign({ id: userLogged.id, email: userLogged.email }, process.env.SEGREDO, { expiresIn: 60 * 60 })
     }
 
     async validToken(token) {
@@ -31,7 +30,7 @@ class UserController {
             return ("user");
         } else {
             let decoded;
-            decoded = await jwt.verify(token, "MeuSegredo123!");
+            decoded = await jwt.verify(token, process.env.SEGREDO);
             const user = await this.findUser(decoded.id);
             if (user.permissao == "admin") {
                 return ("admin");
@@ -45,14 +44,11 @@ class UserController {
         if (!nome || !email || !password) {
             throw new Error("Name, email e password são obrigatórios.");
         }
-
         const emailVerific = await UserModel.findOne({ where: { email } });
-
         if (emailVerific) {
             throw new Error("Email já cadastrado.");
-        }
-
-        const passwordHashed = await bcrypt.hash(password, salts);
+            }
+        const passwordHashed = await bcrypt.hash(password, saltos);
         const user = await this.validToken(token);
         console.log(user);
 
@@ -88,19 +84,19 @@ class UserController {
     }
 
     // ========================= Atualiza um usuario no banco ========================= //
-    async updateUser(token, nome, email, password) {
-        if (!token || !nome || !email || !password) {
-            throw new Error("Token, nome, email e senha são obrigatórios.");
+    async updateUser(id, nome, email, password) {
+        if (!id || !nome || !email || !password) {
+            throw new Error("ID, nome, email e senha são obrigatórios.");
         }
 
-        let decoded;
+        /*let decoded;
         try {
-            decoded = await jwt.verify(token, "MeuSegredo123!");
+            decoded = await jwt.verify(token, process.env.SEGREDO);
         } catch (err) {
             throw new Error("Falha na verificação do token: " + err.message);
-        }
+        }*/
 
-        const user = await this.findUser(decoded.id);
+        const user = await this.findUser(id);
         if (!user) {
             throw new Error("Usuário não encontrado.");
         }
@@ -115,24 +111,24 @@ class UserController {
         if (user.email !== email) {
             user.email = email;
         }
-        user.password = await bcrypt.hash(password, salts);
+        user.password = await bcrypt.hash(password, saltos);
         await user.save(); // Adicionei await para garantir que a atualização seja concluída
 
         return user;
     }
 
-    async deleteUser(token) {
-        if (!token) {
+    async deleteUser(id) {
+        if (!id) {
             throw new Error("Token é obrigatório.");
         }
-        let decoded;
+        /*let decoded;
         try {
-            decoded = await jwt.verify(token, "MeuSegredo123!");
+            decoded = await jwt.verify(token, process.env.SEGREDO);
         } catch (err) {
             throw new Error("Falha na verificação do token: " + err.message);
-        }
+        }*/
 
-        const user = await this.findUser(decoded.id);
+        const user = await this.findUser(id);
         if (!user) {
             throw new Error("Usuário não encontrado.");
         }
