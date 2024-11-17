@@ -28,12 +28,6 @@ class UserModel {
                       isIn: [["admin", "user","bloqueado"]],
                     },
                   },
-                status: {
-                type: database.db.Sequelize.STRING,
-                validate: {
-                    isIn: [["bloqueado", "desbloqueado"]],
-                },
-                },
             })
         }
 

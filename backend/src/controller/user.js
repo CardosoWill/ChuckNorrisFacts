@@ -56,13 +56,11 @@ class UserController {
             nome,
             email,
             password: passwordHashed,
-            permissao: user,
-            status: "desbloqueado"
+            permissao: user
         });
 
         return userValue;
     }
-
    
     // ========================= Pega todos os users ========================= //
     async findAll() {

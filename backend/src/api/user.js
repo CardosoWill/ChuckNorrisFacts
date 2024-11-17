@@ -27,6 +27,7 @@ class UserApi {
         }
     }
 
+
     // ========================= Buscar todos ========================= //
     async userFindAll(req, res) {
 

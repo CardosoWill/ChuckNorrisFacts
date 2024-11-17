@@ -7,6 +7,7 @@ import Piadas from './pages/Piadas'
 import User from './pages/User'
 import Fatos from './pages/Fatos'
 import Header from './components/Header'
+import NovoUser from './pages/NovoUser'
 import Footer from './components/Footer'
 import { AuthProvider } from './auth/Context'
 import PrivateRoute from './routes/PrivateRoute'
@@ -34,6 +35,7 @@ function App() {
         </Route>
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/novoUser' element={<NovoUser />} />
       </Routes>
       <ToastContainer
         position="bottom-center"

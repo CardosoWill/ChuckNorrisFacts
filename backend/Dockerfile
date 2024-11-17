@@ -1,5 +1,5 @@
 #imagem base
-FROM node:20
+FROM node:20.8
 
 #criar uma pasta
 WORKDIR /app
