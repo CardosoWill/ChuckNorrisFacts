@@ -34,7 +34,7 @@ export default function SignUp() {
       if (error.status === 401 || error.status === 404) {
         return toast('Email ou password inválido, tente novamente!');
       }
-      toast('Erro inesperado, tente novamente mais tarde!');
+      toast('tente novamente mais tarde!');
     }
   };
 
