@@ -5,7 +5,7 @@ import { createUser } from '../../api/user';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function SignUp() {
+export default function NovoUser() {
   const navigate = useNavigate();
 
   const handleBackClick = () => {
@@ -41,13 +41,13 @@ export default function SignUp() {
   return (
     <div className="signup-container">
       <form className="signup-form" onSubmit={handleSubmit}>
-        <p className="signup-title">Cadastre-se</p>
+        <p className="signup-title">Cadastraaaaaaaaaaaaaaa</p>
         
         <input className="signup-input" type="text" required value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Nome" />
         <input className="signup-input" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
         <input className="signup-input" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Senha" />
         
-        <button className="signup-btn" type="submit">Cadastrar-se</button>
+        <button className="signup-btn" type="submit">Cadastrar</button>
         <button className="signup-btn back-button" type="button" onClick={(e) => { e.preventDefault(); handleBackClick(); }}>Voltar</button>
         
       </form>

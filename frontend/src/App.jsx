@@ -7,16 +7,18 @@ import Piadas from './pages/Piadas'
 import User from './pages/User'
 import Fatos from './pages/Fatos'
 import Header from './components/Header'
+import NovoUser from './pages/NovoUser'
 import Footer from './components/Footer'
 import { AuthProvider } from './auth/Context'
 import PrivateRoute from './routes/PrivateRoute'
-import VerifyCode from './pages/VerifyCode'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
   const location = useLocation();
 
-  const showElement = location.pathname === '/login' ||  location.pathname === '/register' || location.pathname ==='/'|| location.pathname ==='/verify-code';
+  const showElement = location.pathname === '/login' ||  location.pathname === '/register' || location.pathname ==='/';
 
   return (
     <AuthProvider>
@@ -31,11 +33,22 @@ function App() {
         <Route path='/user' element={<User />} />
         <Route path='/fatos' element={<Fatos />} />
         </Route>
-        
         <Route path='/login' element={<Login />} />
-        <Route path='/verify-code' element={<VerifyCode />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/novoUser' element={<NovoUser />} />
       </Routes>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={3500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        style={{ width: '50%' }}
+      />
       {!showElement?<Footer/>:null}
     </AuthProvider>
   )

@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const user = require('../controller/user');
+require('dotenv').config();
 
 function authMiddleware(roles = []) {
   return async (req, res, next) => {
@@ -9,7 +10,7 @@ function authMiddleware(roles = []) {
       return res.status(400).json({ mensagem: "Token não fornecido" });
     }
 
-    jwt.verify(token, "MeuSegredo123!", async (err, decoded) => {
+    jwt.verify(token,process.env.SEGREDO, async (err, decoded) => {
       if (err) {
         return res.status(401).json({ mensagem: "Token inválido" });
       }

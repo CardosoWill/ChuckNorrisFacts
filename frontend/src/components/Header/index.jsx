@@ -17,6 +17,10 @@ export default function Header() {
                     <Link to="/fatos">
                         <li>Fatos</li>
                     </Link>
+                    <Link to="/novoUser">
+                        <li>Criar</li>
+                    </Link>
+
                 </ul>
             </nav>
         </header>
