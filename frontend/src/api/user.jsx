@@ -20,7 +20,7 @@ export const getContext = async() => {
     const response = await api.get('/api/v1/user/context') 
     return response.data
 }
-export const updateUser = async(user) => {
-    const response = await api.put('/api/v1/user/',user) 
-    return response.data
-}
+export const updateUser = async (user) => {
+    const response = await api.put('/api/v1/user/', user);
+    return response.data;
+  };

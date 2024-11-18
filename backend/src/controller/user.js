@@ -1,6 +1,7 @@
 const UserModel = require('../model/user')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');
+
 require('dotenv').config();
 
 const saltos = parseInt(process.env.SALTS)
@@ -21,7 +22,7 @@ class UserController {
             throw new Error("Email ou senha inválido. Tente novamente!")
         }
 
-        return jwt.sign({ id: userLogged.id, email: userLogged.email }, process.env.SEGREDO, { expiresIn: 60 * 60 })
+        return jwt.sign({ id: userLogged.id, email: userLogged.email, role:userLogged.permissao }, process.env.SEGREDO, { expiresIn: 60 * 60 })
     }
 
     async validToken(token) {
@@ -56,9 +57,10 @@ class UserController {
             password: passwordHashed,
             permissao: user
         });
-
         return userValue;
+
     }
+
    
     // ========================= Pega todos os users ========================= //
     async findAll() {
