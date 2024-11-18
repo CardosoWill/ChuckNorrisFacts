@@ -14,11 +14,10 @@ class JokeApi {
 
 // ========================= Criar Piadas ========================= //
 async createJoke(req, res) {
-    const jokes = req.body;  // Agora esperamos um array de piadas no body
-
+    const {categoria, texto} = req.body;
     try {
-        const createdJokes = await JokeController.createJokes(jokes); // Passando o array de piadas para o controller
-        return res.status(201).send(createdJokes);  // Retorna todas as piadas criadas
+        const createdJokes = await JokeController.createJokes(categoria,texto); 
+        return res.status(201).send(createdJokes); 
     } catch (e) {
         return res.status(400).send({ error: `Erro ao criar piadas: ${e.message}` });
     }

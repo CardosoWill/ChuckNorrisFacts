@@ -106,10 +106,10 @@ class UserController {
         }
         const oldUser = await this.findUser(decoded.id);
         const emailVerific = await UserModel.findOne({ where: { email } });
-        if (emailVerific) {
+        if (emailVerific !== oldUser.email && emailVerific === email) {
             throw new Error("Email já cadastrado.");
-            }
-            oldUser.nome = nome || oldUser.nome;
+        }
+        oldUser.nome = nome || oldUser.nome;
         oldUser.email = email || oldUser.email;
         oldUser.save();
 
