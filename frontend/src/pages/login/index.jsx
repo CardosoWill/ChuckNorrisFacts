@@ -1,11 +1,11 @@
 import { useContext, useState } from 'react';
 import './styles.css';
 import { useNavigate } from 'react-router-dom';
-import { authContext } from '../../auth/Context';
+import { AuthContext } from '../../auth/Context';
 import { loginUser } from '../../api/user';
 
 export default function Login() {
-  const  { login }  = useContext(authContext)
+  const  { login }  = useContext(AuthContext)
   const navigate = useNavigate();
 
   const apertaBotao = (event) => {
