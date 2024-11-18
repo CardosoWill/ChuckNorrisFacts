@@ -132,10 +132,10 @@ class UserController {
             throw new Error("Usuário não encontrado.");
         }
         await user.destroy()
-        console.log("cheguoi")
 
         return;
     }
-}
 
+    
+}
 module.exports = new UserController;

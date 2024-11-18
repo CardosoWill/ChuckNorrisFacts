@@ -1,5 +1,4 @@
 const UserController = require('../controller/user')
-
 class UserApi {
     
     // ========================= Login ========================= //
