@@ -26,6 +26,12 @@ export default function Header() {
                             <Link to="/fatos"> <li>Criar Fatos</li></Link>
                             : null
                     }
+                    {
+                        role === 'admin'
+
+                            ? <Link to="/novoUser"><li>Criar</li></Link>
+                            : null
+                    }
 
                 </ul>
             </nav>
