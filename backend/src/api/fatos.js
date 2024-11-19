@@ -16,6 +16,7 @@ class JokeApi {
 async createJoke(req, res) {
     const {categoria, texto} = req.body;
     try {
+        console.log("aqui")
         const createdJokes = await JokeController.createJokes(categoria,texto); 
         return res.status(201).send(createdJokes); 
     } catch (e) {

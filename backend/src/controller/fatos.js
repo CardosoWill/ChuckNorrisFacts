@@ -25,7 +25,7 @@ class JokeController {
         const jokeExists = await JokeModel.findOne({ where: { texto } });
 
         if (jokeExists) {
-            throw new Error(`Piada já cadastrada com esse ID: ${id}`);
+            throw new Error('Piada já cadastrada');
         }
 
         const jokeValue = await JokeModel.create({
