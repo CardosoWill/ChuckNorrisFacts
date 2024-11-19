@@ -1,22 +1,20 @@
 import './styles.css';
 import React, { useState } from 'react';
-import translate from "translate";
-translate.engine = "google";//"yandex", "libre", "deepl"
+import { getContext} from '../../api/fatos';
 
 export default function Piadas() {
 
-    const [piada, setPiada] = useState('Clique no botão para ouvir uma piada aleatória!');
+    const [piada, setPiada] = useState('Clique no botão para ver uma piada aleatória!');
 
     async function carregarPiada() {
         try {
-            const response = await fetch('https://api.chucknorris.io/jokes/random');
-            const data = await response.json();
-            const traduzido = await translate(data.value, "pt");
-            setPiada(traduzido);
-        } catch (error) {
-            console.error('Erro ao carregar piada:', error);
-            setPiada('Ocorreu um erro ao carregar a piada. Tente novamente.');
-        }
+            const response = await getContext()
+            if(response) {
+                setPiada(response.joke)
+            }
+          } catch (error) {
+            toast('Erro ao busccar piada!')
+          }
     }
 
     return (

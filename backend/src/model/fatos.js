@@ -4,36 +4,38 @@ class JokeModel {
     constructor() {
         this.model = database.db.define("fatos", {
 
-            idFatos: {
+            id: {
                 type: database.db.Sequelize.INTEGER,
                 primaryKey: true,
                 autoIncrement: true
             },                
-            id: {
-                type: database.db.Sequelize.STRING,
-            },
             category: {
                 type: database.db.Sequelize.STRING,
-                allowNull: true
+                allowNull: true,
+                validate: {
+                    isIn: {
+                        args: [
+                            [
+                                "animal",
+                                "celebridade",
+                                "desenvolvimento",
+                                "moda",
+                                "comida",
+                                "história",
+                                "dinheiro",
+                                "filme",
+                                "música",
+                                "ciência",
+                                "esporte",
+                                "viagem",
+                            ],
+                        ],
+                        msg: "Categoria inválida. Escolha uma das opções permitidas.",
+                    },
+                },
             },
-            icon_url: {
-                type: database.db.Sequelize.STRING,
-                allowNull: false
-            },
-            url: {
-                type: database.db.Sequelize.STRING,
-                allowNull: false
-            },
-            value: {
+            texto: {
                 type: database.db.Sequelize.TEXT,
-                allowNull: false
-            },
-            created_at: {
-                type: database.db.Sequelize.DATE,
-                allowNull: false
-            },
-            updated_at: {
-                type: database.db.Sequelize.DATE,
                 allowNull: false
             }
         });

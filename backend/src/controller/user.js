@@ -1,6 +1,7 @@
 const UserModel = require('../model/user')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');
+
 require('dotenv').config();
 
 const saltos = parseInt(process.env.SALTS)
@@ -21,7 +22,7 @@ class UserController {
             throw new Error("Email ou senha inválido. Tente novamente!")
         }
 
-        return jwt.sign({ id: userLogged.id, email: userLogged.email }, process.env.SEGREDO, { expiresIn: 60 * 60 })
+        return jwt.sign({ id: userLogged.id, email: userLogged.email, role:userLogged.permissao }, process.env.SEGREDO, { expiresIn: 60 * 60 })
     }
 
     async validToken(token) {
@@ -56,9 +57,10 @@ class UserController {
             password: passwordHashed,
             permissao: user
         });
-
         return userValue;
+
     }
+
    
     // ========================= Pega todos os users ========================= //
     async findAll() {
@@ -106,10 +108,10 @@ class UserController {
         }
         const oldUser = await this.findUser(decoded.id);
         const emailVerific = await UserModel.findOne({ where: { email } });
-        if (emailVerific) {
+        if (emailVerific !== oldUser.email && emailVerific === email) {
             throw new Error("Email já cadastrado.");
-            }
-            oldUser.nome = nome || oldUser.nome;
+        }
+        oldUser.nome = nome || oldUser.nome;
         oldUser.email = email || oldUser.email;
         oldUser.save();
 
@@ -132,10 +134,10 @@ class UserController {
             throw new Error("Usuário não encontrado.");
         }
         await user.destroy()
-        console.log("cheguoi")
 
         return;
     }
-}
 
+    
+}
 module.exports = new UserController;
