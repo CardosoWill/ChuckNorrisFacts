@@ -3,31 +3,26 @@ import './styles.css';
 import { useNavigate } from 'react-router-dom';
 import { createUser } from '../../api/user';
 import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function SignUp() {
   const navigate = useNavigate();
 
   const handleBackClick = () => {
-    navigate('/login');
+    navigate('/');
   };
 
   const [nome, setNome] = useState('');
-  const [numeroCelular, setNumeroCelular] = useState(''); 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [codigoArea, setCodigoArea] = useState('47'); 
 
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
       
-      // Formatar o número celular para enviar ao backend
-      const formattedNumber = `+55${codigoArea}9${numeroCelular}`;
-      
-      const responseApi = await createUser({ nome, numeroCelular: formattedNumber, email, password });
-      console.log(responseApi);
+      const responseApi = await createUser({ nome, email, password });
       if (responseApi.id) {
-        navigate('/verify-code');
+        navigate('/login');
       } else {
         console.log(responseApi);
       }
@@ -39,57 +34,22 @@ export default function SignUp() {
       if (error.status === 401 || error.status === 404) {
         return toast('Email ou password inválido, tente novamente!');
       }
-      toast('Erro inesperado, tente novamente mais tarde!');
-    }
-  };
-
-  const handlePhoneChange = (e) => {
-    const input = e.target.value.replace(/\D/g, ''); // Remove tudo que não é número
-    // Limita o número a 8 dígitos
-    if (input.length <= 8) {
-      setNumeroCelular(input);
+      toast('tente novamente mais tarde!');
     }
   };
 
   return (
     <div className="signup-container">
       <form className="signup-form" onSubmit={handleSubmit}>
-        <h2>Cadastre-se</h2>
-        <div className="input-group">
-          <label htmlFor="nome">Nome:</label>
-          <input type="text" id="nome" required value={nome} onChange={(e) => setNome(e.target.value)} />
-        </div>
-        <div className="input-group">
-          <label htmlFor="numeroCelular">Número Celular:</label>
-          <div>
-            <select id="codigoArea" value={codigoArea} onChange={(e) => setCodigoArea(e.target.value)}>
-              <option value="47">SC</option> {/* Santa Catarina */}
-              <option value="11">SP</option> {/* São Paulo */}
-              <option value="21">RJ</option> {/* Rio de Janeiro */}
-            </select>
-            <input
-              type="text"
-              id="numeroCelular"
-              required
-              placeholder="Digite o número"
-              value={numeroCelular}
-              onChange={handlePhoneChange}
-              maxLength={8} // Limita a entrada do usuário a 8 dígitos
-            />
-          </div>
-        </div>
-        <div className="input-group">
-          <label htmlFor="email">Email:</label>
-          <input type="text" id="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
-        </div>
-        <div className="input-group">
-          <label htmlFor="password">Password:</label>
-          <input type="password" id="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
-        </div>
-        <button className="button" type="submit">Cadastrar-se</button>
-        <button className="button back-button" onClick={handleBackClick}>
-          Voltar
-        </button>
+        <p className="signup-title">Cadastre-se</p>
+        
+        <input className="signup-input" type="text" required value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Nome" />
+        <input className="signup-input" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+        <input className="signup-input" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Senha" />
+        
+        <button className="signup-btn" type="submit">Cadastrar-se</button>
+        <button className="signup-btn back-button" type="button" onClick={(e) => { e.preventDefault(); handleBackClick(); }}>Voltar</button>
+        
       </form>
     </div>
   );

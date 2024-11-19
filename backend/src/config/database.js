@@ -1,4 +1,5 @@
 const { Sequelize } = require("sequelize");
+require('dotenv').config();
 
 class Database {
 
@@ -8,11 +9,11 @@ class Database {
     
     init(){
         this.db = new Sequelize({
-            database:"exemplo",
-            host:"localhost",
-            password:"123456",
-            username:"root",
-            dialect:"mysql"
+            database:process.env.DB_DATABASE,
+            host:process.env.DB_HOST,
+            password:process.env.DB_PASSWORD,
+            username:process.env.DB_USERNAME,
+            dialect:process.env.DB_DIALECT
         })
     }
 }

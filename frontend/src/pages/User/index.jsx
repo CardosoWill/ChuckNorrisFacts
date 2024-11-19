@@ -1,12 +1,10 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './styles.css'
-import { authContext } from '../../auth/Context'
 import { useNavigate } from 'react-router-dom';
-import { deleteUser, getUserById, updateUser } from '../../api/user';
-//import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
+import { deleteUser, getContext, updateUser } from '../../api/user';
 
 export default function Profile() {
-  const { logout } = useContext(authContext);
   const [id, setId] = useState('');
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
@@ -17,29 +15,29 @@ export default function Profile() {
 
   async function carregarPerfil() {
     try {
-      const response = await getUserById()
-    
+      const response = await getContext()
       if(response.id) {
         setId(response.id)
         setNome(response.nome)
         setEmail(response.email)
       }
     } catch (error) {
-      //toast('Erro inesperado, tente novamente mais tarde!')
+      toast('Tente novamente mais tarde!')
     }
   }
 
   const handleSaveUpdate = async () => {
     try {
-      const response = await updateUser(id, { nome: updNome, email: updEmail })
-  
+      // deverá alterar o usuário
+      const response = await updateUser({nome: updNome, email: updEmail});
       if(response.id){
+        // se der certo redireciona
         setNome(updNome)
         setEmail(updEmail)
         setIsUpdate(false)
       }
     } catch (error) {
-      toast('Erro inesperado, tente novamente mais tarde!')
+      toast('Tente novamente mais tarde!')
     }
   }
 
@@ -54,9 +52,11 @@ export default function Profile() {
       const response = prompt("Para confirmar exclusão digite seu email:")
 
       if(response === email) {      
-        const apiResponse = await deleteUser(id)
-        if(apiResponse.status === 204){
-          logout()
+        // Devera deletar usuario
+        const response = await deleteUser()
+        if(response){
+          // se der certo redireciona
+          toast("Usuário destruido")
           navigate('/')
         }
       } else {
@@ -68,13 +68,16 @@ export default function Profile() {
   }
 
   useEffect(() => {
+    // Carregar dados do usuário ao abrir a página
     async function getConteudo() {
         carregarPerfil()
     }
+    // Executar o carregamento ao abrir a página
     getConteudo()
   }, [])
 
   return (
+    // Layout do componente Profile com os dados do usuário e botões de ação.
     <div className='profile'>
       <div className='info'>
         <h1>Dados do seu perfil</h1>

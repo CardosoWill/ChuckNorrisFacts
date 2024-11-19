@@ -2,55 +2,38 @@ const JokeModel = require('../model/fatos');
 
 class JokeController {
 
+   
+
     // ========================= Buscar Piada Aleatória ========================= //
     async getRandomJoke() {
         const joke = await JokeModel.findOne({
             order: JokeModel.sequelize.random() // Pega uma piada aleatória do banco
         });
-
-        if (!joke) {
-            throw new Error("Nenhuma piada encontrada!");
-        }
-
-        return joke;
+        return joke.texto;
     }
 
     // ========================= Criar uma nova piada ou múltiplas piadas ========================= //
     
-    async createJokes(jokes) {
-        if (!Array.isArray(jokes)) {
-            throw new Error("É necessário enviar um array de piadas.");
+    async createJokes(categoria,texto) {
+        if (!categoria) {
+            throw new Error("É necessário Ter uma categoria.");
+        }
+        if (!texto) {
+            throw new Error("É necessário Ter um Texto.");
         }
 
-        const createdJokes = [];
-        
-        for (const joke of jokes) {
-            const {id, category, icon_url, url, value, created_at, updated_at } = joke;
+        const jokeExists = await JokeModel.findOne({ where: { texto } });
 
-            if (!id || !value || !icon_url || !url) {
-                throw new Error("ID, valor da piada, URL do ícone e URL da piada são obrigatórios.");
-            }
-
-            const jokeExists = await JokeModel.findOne({ where: { id } });
-
-            if (jokeExists) {
-                throw new Error(`Piada já cadastrada com esse ID: ${id}`);
-            }
-
-            const jokeValue = await JokeModel.create({
-                id,
-                category,
-                icon_url,
-                url,
-                value,
-                created_at,
-                updated_at
-            });
-
-            createdJokes.push(jokeValue);
+        if (jokeExists) {
+            throw new Error('Piada já cadastrada');
         }
 
-        return createdJokes;
+        const jokeValue = await JokeModel.create({
+            categoria,
+            texto
+        });
+
+        return jokeValue;
     }
     
     // ========================= Pega todas as piadas ========================= //

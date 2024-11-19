@@ -1,11 +1,11 @@
 import { useContext, useState } from 'react';
 import './styles.css';
 import { useNavigate } from 'react-router-dom';
-import { authContext } from '../../auth/Context';
+import { AuthContext } from '../../auth/Context';
 import { loginUser } from '../../api/user';
 
 export default function Login() {
-  const  { login }  = useContext(authContext)
+  const  { login }  = useContext(AuthContext)
   const navigate = useNavigate();
 
   const apertaBotao = (event) => {
@@ -28,23 +28,23 @@ export default function Login() {
     e.preventDefault();
 
     if (!email || !password) {
-      //return toast("Informe o E-mail e senha para continuar!")
+      return alert("Informe o E-mail e senha para continuar!");
     }
 
     try {
-      const response = await loginUser(email, password)
+      const response = await loginUser(email, password);
       if (response.token) {
         login(response.token);
-        navigate('/piadas')
+        navigate('/piadas');
       }
-
     } catch (error) {
-      /*if (error.response.status === 403) {
-        return toast("Email ou senha invalido");
+      if (error.response && error.response.status === 403) {
+        alert("Email ou senha inválido");
+      } else {
+        alert("Ocorreu um erro. Tente novamente mais tarde.");
       }
-      return toast("Erro inesperado, tente novamente mais tarde")*/
     }
-  };
+};
 
   return (
     <main>

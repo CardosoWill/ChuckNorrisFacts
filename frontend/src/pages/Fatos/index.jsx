@@ -1,73 +1,78 @@
-import './styles.css';
-import React, { useState, useEffect } from 'react';
-import translate from "translate";
-translate.engine = "google";//"yandex", "libre", "deepl"
+import './styles.css'; 
+import React, { useState } from 'react';
+import { saveJoke } from '../../api/fatos';
 
-export default function ChuckNorrisJokes() {
+export default function Piadas() {
     const [categoria, setCategoria] = useState('');
-    const [piada, setPiada] = useState('Escolha uma categoria para ouvir um Fato!');
-    const [categorias, setCategorias] = useState([]);
+    const [texto, setTexto] = useState('');
+    const [mensagem, setMensagem] = useState('');
 
-    useEffect(() => {
-        async function carregarCategorias() {
-            try {
-                const response = await fetch('https://api.chucknorris.io/jokes/categories');
-                const data = await response.json();
-                console.log(data);
-                setCategorias(data);
-            } catch (error) {
-                console.error('Erro ao carregar categorias:', error);
-            }
+    const categorias = [
+        "animal", 
+        "celebridade", 
+        "desenvolvimento", 
+        "moda", 
+        "comida", 
+        "história", 
+        "dinheiro", 
+        "filme", 
+        "música", 
+        "ciência", 
+        "esporte", 
+        "viagem"
+    ];
+
+    // Função para salvar uma nova piada
+    async function salvarPiada() {
+        if (!categoria || !texto) {
+            setMensagem('Por favor, preencha todos os campos!');
+            return;
         }
-        carregarCategorias();
-    }, []);
-      
-    async function carregarPiada() {
-        if (!categoria) return 
-        
-        const idade = 10;
-        try {
-            const response = await fetch(`https://api.chucknorris.io/jokes/random?category=${categoria}`);
-            const data = await response.json();
 
-            const traduzido = await translate(data.value, "pt");
-            
-            if(categoria == "religion"){
-                const correcao = "Essa píada é muito pesada para que possa ser exibida infelismente chuck Norris não tem filtros";
-                setPiada(correcao);
-            }else if(categoria == "explicit"){
-                if(idade > 1000){
-                    setPiada(traduzido);
-                }else{
-                    const correcao = "Essa píada é muito pesada você precisa ter mais de 1000 anos para ler";
-                    setPiada(correcao);
-                }
-            }else{
-                setPiada(traduzido);
+        try {
+            const response = await saveJoke({ categoria, texto });
+            if (response.id) {
+                setMensagem('Fato salvo com sucesso!');
+                setCategoria('');
+                setTexto('');
+            } else {
+                setMensagem('Erro ao salvar fato!');
             }
-            
         } catch (error) {
-            console.error('Erro ao carregar piada:', error);
-            setPiada('Ocorreu um erro ao carregar a piada. Tente novamente.');
+            setMensagem('Erro asdao salvar fato!');
         }
     }
 
     return (
-        <div className="piadas">
-            <div className='controle'>
-                <select value={categoria} onChange={(e) => setCategoria(e.target.value)}>
-                    <option value="">Selecione uma categoria</option>
-                    {categorias.map((cat) => (
-                        <option key={cat} value={cat}>
-                            {cat}
-                        </option>
-                    ))}
-                </select>
-                <button onClick={carregarPiada} disabled={!categoria}>
-                    Contar Fato
-                </button>
+         <main className="piada">
+            <h2>Crie suas <s>piadas</s> FATOS sobre o Chuck Norris</h2>
+            <div className="criar-piada">
+                <h3>Adicionar Novo Fato</h3>
+                <label>
+                    Categoria:
+                    <select 
+                        value={categoria} 
+                        onChange={(e) => setCategoria(e.target.value)}
+                    >
+                        <option value="">Selecione uma categoria</option>
+                        {categorias.map((cat, index) => (
+                            <option key={index} value={cat}>
+                                {cat}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+                <label>
+                    Texto:
+                    <textarea 
+                        value={texto} 
+                        onChange={(e) => setTexto(e.target.value)} 
+                        placeholder="Digite o texto do fato"
+                    />
+                </label>
+                <button onClick={salvarPiada}>Salvar Fato</button>
+                {mensagem && <p className="mensagem">{mensagem}</p>}
             </div>
-            <p>{piada}</p>
-        </div>
+        </main>
     );
 }
