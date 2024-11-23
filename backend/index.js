@@ -71,7 +71,7 @@ async function createPiadas() {
     }
 }
 database.db
-    .sync({ force: false }) // Não apaga os dados existentes ao sincronizar
+    .sync({ force: true }) // Não apaga os dados existentes ao sincronizar
     .then(() => {
         app.listen(process.env.PORT, () => {
             console.log("Servidor rodando na porta "+process.env.PORT);

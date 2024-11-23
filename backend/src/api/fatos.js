@@ -5,7 +5,7 @@ class JokeApi {
     async getRandomJoke(req, res) {
         try {
             const joke = await JokeController.getRandomJoke()
-            res.send({ joke });
+            res.send( joke );
         } catch (e) {
             console.log(e)
             res.status(400).send('Erro ao buscar piada aleatória!')
@@ -49,11 +49,11 @@ async createJoke(req, res) {
 
     // ========================= Atualizar Piada ========================= //
     async updateJoke(req, res) {
-        const { idFatos } = req.params
-        const { id, category, icon_url, url, value, created_at, updated_at } = req.body
+        const { id } = req.params
+        const { texto } = req.body
 
         try {
-            const joke = await JokeController.updateJoke(idFatos, id, category, icon_url, url, value, created_at, updated_at)
+            const joke = await JokeController.updateJoke(id, texto)
             return res.status(200).send(joke)
         } catch (e) {
             return res.status(400).send({ error: `Erro ao atualizar piada: ${e.message}` })
@@ -62,10 +62,10 @@ async createJoke(req, res) {
 
     // ========================= Deletar Piada ========================= //
     async deleteJoke(req, res) {
-        const { idFatos } = req.params
+        const { id } = req.params
 
         try {
-            await JokeController.deleteJoke(idFatos)
+            await JokeController.deleteJoke(id)
             return res.status(204).send()
         } catch (e) {
             return res.status(400).send({ error: `Erro ao deletar piada: ${e.message}` })
