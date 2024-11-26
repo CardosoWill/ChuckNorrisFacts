@@ -48,7 +48,7 @@ export default function Piadas() {
     return (
         <main className='piada'>
             <h2>Algumas <s>piadas</s> FATOS sobre o Chuck Norris</h2>
-            <div className='controle'>
+            <div className='centro'>
                 {editando ? (
                     <div className='edicao'>
                         <textarea 
@@ -56,8 +56,10 @@ export default function Piadas() {
                             value={novaPiada}
                             onChange={(e) => setNovaPiada(e.target.value)}
                         />
-                        <button onClick={salvarEdicao}>Salvar</button>
-                        <button onClick={() => setEditando(false)}>Cancelar</button>
+                        <div className='centro'>
+                            <button onClick={salvarEdicao}>Salvar</button>
+                            <button onClick={() => setEditando(false)}>Cancelar</button>
+                        </div>
                     </div>
                 ) : (
                     <>

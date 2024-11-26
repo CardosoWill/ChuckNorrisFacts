@@ -12,6 +12,10 @@ export default function Login() {
     event.preventDefault();
     navigate('/');
   };
+  const cadastrese = (event) => {
+    event.preventDefault();
+    navigate('/register');
+  };
   /*
     const handleBackClick = () => {
       navigate('/')
@@ -57,7 +61,8 @@ export default function Login() {
 
           <button className="login-btn" type="submit" onClick={handleSubmit}>Login</button>
 
-          <p className="login-signin">Não tem um login? <a href="/register" className="login-link">Clique aqui</a></p>
+          <p className="login-signin">Não tem um login? </p>
+          <button className="btn-cadastro" onClick={cadastrese} >Clique aqui</button>
         </form>
       </div>
     </main>

@@ -68,10 +68,10 @@ async function createPiadas() {
         }           
     } catch (error) {
         console.error('Erro ao criar Piadas:', error);
-    }
+    } 
 }
 database.db
-    .sync({ force: true }) // Não apaga os dados existentes ao sincronizar
+    .sync({ force: false }) // Não apaga os dados existentes ao sincronizar
     .then(() => {
         app.listen(process.env.PORT, () => {
             console.log("Servidor rodando na porta "+process.env.PORT);
