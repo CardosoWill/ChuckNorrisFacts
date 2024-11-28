@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './styles.css';
 import { useNavigate } from 'react-router-dom';
-import { getUserById, createUser, updateUser, deleteUser } from '../../api/user'; // Agora estamos importando deleteUser
+import { getUserById, createUser, updateAdmin, deleteAdmin } from '../../api/user';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -13,22 +13,18 @@ export default function NovoUser() {
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isPasswordDisabled, setIsPasswordDisabled] = useState(false);
-  const [userId, setUserId] = useState(null); // Armazena o ID do usuário para alterações e exclusões
+  const [userId, setUserId] = useState(null);
 
   const handleBackClick = () => {
     navigate('/');
   };
 
-  // Função para cadastrar um novo usuário
   const handleRegisterClick = async (e) => {
     e.preventDefault();
-
     if (nome && email && password) {
       try {
         setIsLoading(true);
-
         const response = await createUser({ nome, email, password });
-
         toast.success('Usuário cadastrado com sucesso!');
         setNome('');
         setEmail('');
@@ -44,7 +40,33 @@ export default function NovoUser() {
   };
 
   const handleAlterClick = async () => {
-    const userId = prompt('Por favor, insira o ID do usuário que deseja alterar:');
+    if (!userId) {
+      toast.error('Nenhum usuário selecionado para alteração.');
+      return;
+    }
+
+    if (nome && email) {
+
+      try {
+        console.log(userId, { nome ,email})
+        setIsLoading(true);
+        const update = await updateAdmin(userId, { nome ,email});
+        toast.success('Usuário atualizado com sucesso!');
+        setUserData(update); // Atualiza os dados do usuário
+        setNome(update.nome);
+        setEmail(update.email);
+      } catch (error) {
+        toast.error('Erro ao atualizar usuário.');
+      } finally {
+        setIsLoading(false);
+      }
+    } else {
+      toast.error('Preencha os campos obrigatórios para atualizar o usuário.');
+    }
+  };
+
+  const handleSearchClick = async () => {
+    const userId = prompt('Por favor, insira o ID do usuário que deseja buscar:');
     if (userId) {
       setIsLoading(true);
       try {
@@ -55,7 +77,7 @@ export default function NovoUser() {
           setNome(user.nome || '');
           setEmail(user.email || '');
           setPassword(user.password || '');
-          setUserId(userId); // Armazena o ID do usuário para futuras atualizações
+          setUserId(userId);
           setIsPasswordDisabled(true);
         } else {
           toast.error('Usuário não encontrado');
@@ -67,48 +89,14 @@ export default function NovoUser() {
       }
     }
   };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!userId) {
-      toast.error('Nenhum usuário selecionado para alteração.');
-      return;
-    }
-
-    if (nome && email && password) {
-      try {
-        setIsLoading(true);
-
-        // Chama a API para atualizar o usuário
-        const updatedUser = await updateUser(userId, { nome, email, password });
-
-        toast.success('Usuário atualizado com sucesso!');
-        setUserData(updatedUser); // Atualiza os dados do usuário na interface
-        setNome('');
-        setEmail('');
-        setPassword('');
-      } catch (error) {
-        toast.error('Erro ao atualizar usuário');
-      } finally {
-        setIsLoading(false);
-      }
-    } else {
-      toast.error('Preencha todos os campos para atualizar o usuário.');
-    }
-  };
-
-  // Função para excluir um usuário
+  
   const handleDeleteClick = async () => {
     const userIdToDelete = prompt('Por favor, insira o ID do usuário que deseja excluir:');
     if (userIdToDelete) {
       setIsLoading(true);
       try {
-        // Chama a função deleteUser passando o ID do usuário
-        await deleteUser(userIdToDelete);
-
+        await deleteAdmin(userIdToDelete);
         toast.success('Usuário excluído com sucesso!');
-        // Limpar os campos e redirecionar ou dar algum outro feedback
         setNome('');
         setEmail('');
         setPassword('');
@@ -116,7 +104,7 @@ export default function NovoUser() {
         setUserId(null);
       } catch (error) {
         toast.error('Erro ao excluir usuário');
-        console.error('Erro ao excluir usuário:', error); // Log para identificar o erro
+        console.error('Erro ao excluir usuário:', error);
       } finally {
         setIsLoading(false);
       }
@@ -125,18 +113,14 @@ export default function NovoUser() {
     }
   };
 
+  const handleListAdminClick = () => {
+    toast.info('Função de listar admin em desenvolvimento.');
+  };
+
   return (
     <div className="signup-container">
-      <form className="signup-form" onSubmit={handleSubmit}>
+      <form className="signup-form">
         <p className="signup-title">Cadastrar ou Alterar Cadastro</p>
-
-        <button
-          className="signup-btn"
-          type="button"
-          onClick={handleRegisterClick}
-        >
-          Cadastrar Usuário
-        </button>
 
         <input
           className="signup-input"
@@ -154,7 +138,6 @@ export default function NovoUser() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
         />
-
         <input
           className="signup-input"
           type="password"
@@ -162,37 +145,29 @@ export default function NovoUser() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Senha"
-          disabled={isPasswordDisabled} // Desabilita o campo senha após carregar os dados
+          disabled={isPasswordDisabled}
         />
 
-        <button className="signup-btn" type="submit">
-          Salvar Alterações
-        </button>
-
-        <button
-          className="signup-btn alter-button"
-          type="button"
-          onClick={handleAlterClick}
-        >
-          Buscar Usuário
-        </button>
-
-        {/* Botão para excluir usuário */}
-        <button
-          className="signup-btn delete-button"
-          type="button"
-          onClick={handleDeleteClick}
-        >
-          Excluir Usuário
-        </button>
-
-        <button
-          className="signup-btn back-button"
-          type="button"
-          onClick={(e) => { e.preventDefault(); handleBackClick(); }}
-        >
-          Voltar
-        </button>
+        <div className="signup-btn-container">
+          <button className="signup-btn" type="button" onClick={handleRegisterClick}>
+            Cadastrar
+          </button>
+          <button className="signup-btn" type="button" onClick={handleSearchClick}>
+            Buscar
+          </button>
+          <button className="signup-btn" type="button" onClick={handleAlterClick}>
+            Alterar
+          </button>
+          <button className="signup-btn" type="button" onClick={handleDeleteClick}>
+            Excluir
+          </button>
+          <button className="signup-btn" type="button" onClick={handleListAdminClick}>
+            Listar Admin
+          </button>
+          <button className="signup-btn" type="button" onClick={handleBackClick}>
+            Voltar
+          </button>
+        </div>
       </form>
     </div>
   );

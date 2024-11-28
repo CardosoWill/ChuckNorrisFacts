@@ -68,6 +68,28 @@ class UserApi {
             return res.status(400).send({ error: `Erro ao alterar usuário ${e.message}`})
         }
     }
+
+
+    // ========================= Atualizar Admin =======================//
+
+    async updateAdmin(req, res) {
+        const { id } = req.params
+        const token = req.headers["authorization"];
+        const { nome, email } = req.body;
+    
+        if (!id) {
+            return res.status(400).send({ error: "O ID do usuário é obrigatório." });
+        }
+    
+        try {
+            const user = await UserController.updateAdmin(token, id, nome, email);
+            return res.status(200).send(user);
+        } catch (e) {
+            return res.status(400).send({ error: `Erro ao alterar usuário: ${e.message}` });
+        }
+    }
+    
+
     // ========================= Deletar ========================= //
     async deleteUser(req, res) {
         const token = req.headers["authorization"];
@@ -79,6 +101,20 @@ class UserApi {
             return res.status(400).send({ error: `Erro ao deletar usuário ${e.message}` })
         }
     }
+
+    // ========================= Deletar Admin ========================= //
+    async deleteAdmin(req, res) {
+        const { id } = req.params; 
+        const token = req.headers["authorization"];
+    
+        try {
+            await UserController.deleteAdmin(id, token);
+            return res.status(204).send();
+        } catch (e) {
+            return res.status(400).send({ error: `Erro ao deletar usuário: ${e.message}` });
+        }
+    }
+
 
 }
 
