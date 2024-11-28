@@ -13,18 +13,17 @@ export const getContext = async() => {
 export async function saveJoke(data) {
     try {
         const response = await api.post('/api/v1/jokes', data);
-        console.log(response) 
         return response.data;
     } catch (error) {
         console.error('Erro ao salvar fato:', error);
         return { success: false };
     }
 }
-export const deleteUser = async () => {
-    return api.delete('/api/v1/user/')
+export const deletePiada = async (id) => {
+    return api.delete(`/api/v1/jokes/${id}`)
 }
 
-export const updateUser = async(user) => {
-    const response = await api.put('/api/v1/user/',user) 
+export const updatePiada = async (id,texto) => {
+    const response = await api.put(`/api/v1/jokes/${id}`,{texto}) 
     return response.data
 }

@@ -9,7 +9,7 @@ class JokeController {
         const joke = await JokeModel.findOne({
             order: JokeModel.sequelize.random() // Pega uma piada aleatória do banco
         });
-        return joke.texto;
+        return joke;
     }
 
     // ========================= Criar uma nova piada ou múltiplas piadas ========================= //
@@ -57,20 +57,15 @@ class JokeController {
     }
 
     // ========================= Atualiza uma piada no banco ========================= //
-    async updateJoke(idFatos, id, category, icon_url, url, value, created_at, updated_at) {
-        if (!idFatos || !id || !value || !icon_url || !url) {
-            throw new Error("ID, valor da piada, URL do ícone e URL da piada são obrigatórios.");
+    async updateJoke(id, texto) {
+        if (!id || !texto) {
+            throw new Error("texto da piada, da piada é obrigatório.");
         }
 
-        const jokeValue = await this.findJokeById(idFatos);
+        const jokeValue = await this.findJokeById(id);
+    
+        jokeValue.texto = texto;
         
-        jokeValue.id = id;
-        jokeValue.category = category;
-        jokeValue.icon_url = icon_url;
-        jokeValue.url = url;
-        jokeValue.value = value;
-        jokeValue.created_at = created_at;
-        jokeValue.updated_at = updated_at;
 
         await jokeValue.save();
 
@@ -78,12 +73,12 @@ class JokeController {
     }
 
     // ========================= Deleta uma piada do banco ========================= //
-    async deleteJoke(idFatos) {
-        if (!idFatos) {
+    async deleteJoke(id) {
+        if (!id) {
             throw new Error("ID é obrigatório.");
         }
 
-        const jokeValue = await this.findJokeById(idFatos);
+        const jokeValue = await this.findJokeById(id);
 
         await jokeValue.destroy();
 

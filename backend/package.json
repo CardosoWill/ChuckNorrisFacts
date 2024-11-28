@@ -4,6 +4,7 @@
   "description": "BackEnd de uma aplicação web",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "dev": "node --watch index.js",
     "test": "jest --coverage"
   },
@@ -17,6 +18,8 @@
     "express": "^4.21.0",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.3",
+    "pg": "^8.13.1",
+    "pg-hstore": "^2.3.4",
     "save": "^2.9.0",
     "sequelize": "^6.37.5",
     "twilio": "^5.3.5"

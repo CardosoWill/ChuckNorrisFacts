@@ -68,7 +68,7 @@ async function createPiadas() {
         }           
     } catch (error) {
         console.error('Erro ao criar Piadas:', error);
-    }
+    } 
 }
 database.db
     .sync({ force: false }) // Não apaga os dados existentes ao sincronizar
