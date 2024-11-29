@@ -10,6 +10,11 @@ export const getContext = async() => {
     console.log(response) 
     return response.data
 }
+export const getAll = async() => {
+    const response = await api.get('/api/v1/jokes')
+    console.log(response) 
+    return response.data.jokes
+}
 export async function saveJoke(data) {
     try {
         const response = await api.post('/api/v1/jokes', data);

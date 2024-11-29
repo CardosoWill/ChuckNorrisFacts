@@ -64,7 +64,7 @@ export default function Profile() {
 
   const handleLogout = () => {
     // Remova dados de autenticação
-    localStorage.removeItem('authToken'); // Exemplo de token no localStorage
+    localStorage.removeItem('token'); // Exemplo de token no localStorage
     toast('Logout realizado com sucesso!');
     navigate('/login'); // Redirecione para a página de login
   };

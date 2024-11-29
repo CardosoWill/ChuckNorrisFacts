@@ -1,0 +1,120 @@
+/* Container principal */
+.signup-container {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  background-image: url(../../assets/Img/silhueta-de-cowboy-contra-a-luz-quente_23-2149334107.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: rgb(3, 3, 3);
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Formulário */
+.signup-form {
+  width: 100%;
+  max-width: 400px;
+  background-image: linear-gradient(to bottom, #424242, #212121);
+  padding: 20px;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.signup-title {
+  color: wheat;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+/* Inputs */
+.signup-input {
+  width: 100%;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  background-color: #333;
+  color: rgb(15, 15, 15);
+  border-bottom: 1px solid wheat;
+  border-radius: 0.5rem;
+}
+
+.signup-input:hover {
+  background-color: #424242;
+}
+
+/* Botões */
+.signup-btn {
+  height: 2.5rem;
+  width: 90%;
+  background-color: wheat;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 400ms;
+  color: #333;
+}
+
+.signup-btn:hover {
+  background-color: antiquewhite;
+}
+
+.signup-btn-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  width: 100%;
+}
+
+.back-button {
+  background-color: #aaa;
+  color: white;
+  margin-top: 1rem;
+}
+
+.back-button:hover {
+  background-color: #888;
+}
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: aliceblue;
+}
+
+.user-table th, .user-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.user-table th {
+  background-color: #f4f4f4;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.pagination button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: rgb(5, 5, 5);
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

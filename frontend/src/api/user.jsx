@@ -49,3 +49,7 @@ export const getUserById = async (id) => {
     const response = await api.get(`/api/v1/user/${id}`);
     return response.data;
 };
+export const getAllUsers = async () => {
+    const response = await api.get(`/api/v1/user`);
+    return response.data;
+};
