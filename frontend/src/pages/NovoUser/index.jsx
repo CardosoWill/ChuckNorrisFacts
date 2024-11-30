@@ -48,11 +48,11 @@ export default function NovoUser() {
     if (nome && email) {
 
       try {
-        console.log(userId, { nome ,email})
+        console.log(userId, { nome, email })
         setIsLoading(true);
-        const update = await updateAdmin(userId, { nome ,email});
+        const update = await updateAdmin(userId, { nome, email });
         toast.success('Usuário atualizado com sucesso!');
-        setUserData(update); // Atualiza os dados do usuário
+        setUserData(update);
         setNome(update.nome);
         setEmail(update.email);
       } catch (error) {
@@ -89,7 +89,7 @@ export default function NovoUser() {
       }
     }
   };
-  
+
   const handleDeleteClick = async () => {
     const userIdToDelete = prompt('Por favor, insira o ID do usuário que deseja excluir:');
     if (userIdToDelete) {
@@ -116,7 +116,7 @@ export default function NovoUser() {
   return (
     <div className="signup-container">
       <form className="signup-form">
-        <p className="signup-title">Cadastrar ou Alterar Cadastro</p>
+        <p className="signup-title">Cadastrar Admin</p>
 
         <input
           className="signup-input"
@@ -145,19 +145,23 @@ export default function NovoUser() {
         />
 
         <div className="signup-btn-container">
-          <button className="signup-btn" type="button" onClick={handleRegisterClick}>
-            Cadastrar
-          </button>
-          <button className="signup-btn" type="button" onClick={handleSearchClick}>
-            Buscar
-          </button>
-          <button className="signup-btn" type="button" onClick={handleAlterClick}>
-            Alterar
-          </button>
-          <button className="signup-btn" type="button" onClick={handleDeleteClick}>
-            Excluir
-          </button>
-          <button className="signup-btn" type="button" onClick={handleBackClick}>
+          <div className="btn-row">
+            <button className="signup-btn" type="button" onClick={handleRegisterClick}>
+              Cadastrar
+            </button>
+            <button className="signup-btn" type="button" onClick={handleSearchClick}>
+              Buscar
+            </button>
+          </div>
+          <div className="btn-row">
+            <button className="signup-btn" type="button" onClick={handleAlterClick}>
+              Alterar
+            </button>
+            <button className="signup-btn" type="button" onClick={handleDeleteClick}>
+              Excluir
+            </button>
+          </div>
+          <button className="signup-btn back-btn" type="button" onClick={handleBackClick}>
             Voltar
           </button>
         </div>

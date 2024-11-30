@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { getAll, updatePiada, deletePiada } from '../../api/fatos';
 import { AuthContext } from '../../auth/Context';
 
-const PIADAS_POR_PAGINA = 5; // Quantidade de piadas por página
+const PIADAS_POR_PAGINA = 5;
 
 export default function Piadas() {
     const { role } = useContext(AuthContext);
@@ -12,13 +12,12 @@ export default function Piadas() {
     const [editandoId, setEditandoId] = useState(null);
     const [novaPiada, setNovaPiada] = useState('');
 
-    // Carrega todas as piadas ao montar o componente
     useEffect(() => {
         async function carregarPiadas() {
             try {
                 const response = await getAll();
                 if (response) {
-                    setPiadas(response); // Supondo que a API retorna um array
+                    setPiadas(response);
                 }
             } catch (error) {
                 console.error('Erro ao buscar piadas:', error);
@@ -28,14 +27,12 @@ export default function Piadas() {
         carregarPiadas();
     }, []);
 
-    // Calcula os índices para paginação
     const indiceInicial = (paginaAtual - 1) * PIADAS_POR_PAGINA;
     const indiceFinal = indiceInicial + PIADAS_POR_PAGINA;
     const piadasPagina = piadas.slice(indiceInicial, indiceFinal);
 
     const totalPaginas = Math.ceil(piadas.length / PIADAS_POR_PAGINA);
 
-    // Função para editar uma piada específica
     function iniciarEdicao(id, texto) {
         setEditandoId(id);
         setNovaPiada(texto);
@@ -100,15 +97,16 @@ export default function Piadas() {
                             {role === 'admin' && (
                                 <td>
                                     {editandoId === piada.id ? (
-                                        <>
+                                       <div className="actions">
                                             <button onClick={() => salvarEdicao(piada.id)}>Salvar</button>
                                             <button onClick={() => setEditandoId(null)}>Cancelar</button>
-                                        </>
+                                         </div>
                                     ) : (
-                                        <>
-                                            <button onClick={() => iniciarEdicao(piada.id, piada.texto)}>Editar</button>
-                                            <button onClick={() => deletarPiada(piada.id)}>Deletar</button>
-                                        </>
+
+                                        <div className="actions">
+                                       <button onClick={() => iniciarEdicao(piada.id, piada.texto)}>Editar</button>
+                                       <button onClick={() => deletarPiada(piada.id)}>Deletar</button>
+                                    </div>
                                     )}
                                 </td>
                             )}
@@ -119,19 +117,11 @@ export default function Piadas() {
             <div className='paginacao'>
                 <button
                     disabled={paginaAtual === 1}
-                    onClick={() => setPaginaAtual((prev) => prev - 1)}
-                >
-                    Anterior
-                </button>
-                <span>
-                    Página {paginaAtual} de {totalPaginas}
-                </span>
+                    onClick={() => setPaginaAtual((prev) => prev - 1)}>Anterior</button>
+                <span>Página {paginaAtual} de {totalPaginas}</span>
                 <button
-                    disabled={paginaAtual === totalPaginas}
-                    onClick={() => setPaginaAtual((prev) => prev + 1)}
-                >
-                    Próxima
-                </button>
+                disabled={paginaAtual === totalPaginas}
+                    onClick={() => setPaginaAtual((prev) => prev + 1)}>Próxima</button>
             </div>
         </main>
     );

@@ -5,8 +5,7 @@ import { getUserById, getAllUsers, createUser, updateAdmin, deleteAdmin } from '
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const USUARIOS_POR_PAGINA = 5; // Quantidade de usuários por página
-
+const USUARIOS_POR_PAGINA = 5; 
 export default function NovoUser() {
   const navigate = useNavigate();
   const [nome, setNome] = useState('');
@@ -33,14 +32,12 @@ export default function NovoUser() {
     carregarUsuarios();
   }, []);
 
-  // Função de paginação
   const indiceInicial = (paginaAtual - 1) * USUARIOS_POR_PAGINA;
   const indiceFinal = indiceInicial + USUARIOS_POR_PAGINA;
   const usuariosPagina = usuarios.slice(indiceInicial, indiceFinal);
 
   const totalPaginas = Math.ceil(usuarios.length / USUARIOS_POR_PAGINA);
 
-  // Funções de gerenciamento de usuários
   const handleBackClick = () => navigate('/fatos');
 
   const handleRegisterClick = async (e) => {

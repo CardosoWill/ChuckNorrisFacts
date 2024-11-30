@@ -1,36 +1,71 @@
-.profile{
+.profile {
+  background-image: url(../../assets/Img/retrato-cinematografico-de-um-cowboy-americano-no-oeste-com-chapeu_23-2151495616.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
-}
-.profile .info{
-  padding: 25px;
-  background-color: #FFF;
-  border-radius: 15px;
-  width: 500px;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
-}
-.profile h1 {
-  border-bottom: 1px solid #4CAF50;
-  padding: 10px 0;
-}
-.profile .actions{
-  display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 20px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  padding: 20px;
 }
-.profile .actions .primary{
-  background-color: #4CAF50;
+
+.info {
+  background-color: rgba(0, 0, 0, 0.712);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.658);
+  width: 100%;
+  max-width: 600px;
   color: #fff;
 }
-.profile .actions button:hover{
-  background-color: #469048;
+
+.info h1 {
+  text-align: center;
+  margin-bottom: 20px;
 }
-.profile input {
+
+.info p {
+  font-size: 18px;
+  margin: 15px 0;
+}
+
+.info input {
   width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box; 
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.actions button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background: #E65939;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.705);
+}
+
+.actions button:hover {
+  background: #e659396c;
+}
+
+.actions .primary {
+  background: #3b8dbf; 
+}
+
+.actions .primary:hover {
+  background: #3b8dbf6c;
 }

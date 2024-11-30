@@ -1,7 +1,6 @@
 const UserController = require('../controller/user')
 class UserApi {
     
-    // ========================= Login ========================= //
     async login(req, res) {
         const { email, password } = req.body
         try {
@@ -12,7 +11,6 @@ class UserApi {
         }
     }
 
-    // ========================= Criar ========================= //
     async createUser(req, res) {
         const token = req.headers["authorization"] || undefined;
         const { nome, email, password } = req.body
@@ -25,8 +23,6 @@ class UserApi {
         }
     }
 
-
-    // ========================= Buscar todos ========================= //
     async userFindAll(req, res) {
 
         try {
@@ -45,7 +41,7 @@ class UserApi {
             return res.status(400).send({ error: `Erro ao listar usuário ${e.message}`})
         }
     }
-        // ========================= Buscar por ID ========================= //
+
         async userFind(req, res) {
             const { id } = req.params
             try {
@@ -55,8 +51,7 @@ class UserApi {
                 res.status(400).send('Deu erro')
             }
         }
-    
-    // ========================= Atualizar ========================= //
+
     async updateUser(req, res) {
         const token = req.headers["authorization"];
         const { nome , email } = req.body
@@ -68,9 +63,6 @@ class UserApi {
             return res.status(400).send({ error: `Erro ao alterar usuário ${e.message}`})
         }
     }
-
-
-    // ========================= Atualizar Admin =======================//
 
     async updateAdmin(req, res) {
         const { id } = req.params
@@ -88,9 +80,7 @@ class UserApi {
             return res.status(400).send({ error: `Erro ao alterar usuário: ${e.message}` });
         }
     }
-    
 
-    // ========================= Deletar ========================= //
     async deleteUser(req, res) {
         const token = req.headers["authorization"];
 
@@ -102,7 +92,6 @@ class UserApi {
         }
     }
 
-    // ========================= Deletar Admin ========================= //
     async deleteAdmin(req, res) {
         const { id } = req.params; 
         const token = req.headers["authorization"];

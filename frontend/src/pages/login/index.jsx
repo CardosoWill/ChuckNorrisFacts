@@ -5,7 +5,7 @@ import { AuthContext } from '../../auth/Context';
 import { loginUser } from '../../api/user';
 
 export default function Login() {
-  const  { login }  = useContext(AuthContext)
+  const { login } = useContext(AuthContext)
   const navigate = useNavigate();
 
   const apertaBotao = (event) => {
@@ -16,15 +16,7 @@ export default function Login() {
     event.preventDefault();
     navigate('/register');
   };
-  /*
-    const handleBackClick = () => {
-      navigate('/')
-    };
-  
-    const handleCreateAccont = () => {
-      navigate('/login')
-    };
-  */
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -48,7 +40,7 @@ export default function Login() {
         alert("Ocorreu um erro. Tente novamente mais tarde.");
       }
     }
-};
+  };
 
   return (
     <main>

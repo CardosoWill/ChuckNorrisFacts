@@ -22,7 +22,6 @@ export default function Piadas() {
         "viagem"
     ];
 
-    // Função para salvar uma nova piada
     async function salvarPiada() {
         if (!categoria || !texto) {
             setMensagem('Por favor, preencha todos os campos!');
@@ -73,9 +72,6 @@ export default function Piadas() {
                     />
                 </label>
                 {mensagem && <p className="mensagem">{mensagem}</p>}
-                <br/>
-                <br/>
-                <br/>
                 <div className = "centro">
                     <button onClick={salvarPiada}>Salvar Fato</button>
                 </div>
