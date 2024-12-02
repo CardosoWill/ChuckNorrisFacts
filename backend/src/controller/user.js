@@ -118,6 +118,36 @@ class UserController {
         return oldUser;
     }
 
+        // ========================= Atualizar Admin ========================= //
+
+        async updateAdmin(token, id, nome, email) {
+            let decoded;
+            try {
+                decoded = await jwt.verify(token, process.env.SEGREDO);
+            } catch (err) {
+                throw new Error("Falha na verificação do token: " + err.message);
+            }
+        
+            const user = await this.findUser(id);
+            if (!user) {
+                throw new Error("Usuário não encontrado.");
+            }
+            if (email) {
+                const emailVerific = await UserModel.findOne({ where: { email } });
+                if (emailVerific && emailVerific.id !== user.id) {
+                    throw new Error("E-mail já cadastrado.");
+                }
+            }        
+            user.nome = nome || user.nome;
+            user.email = email || user.email;
+            await user.save();
+            return user;
+        }
+        
+
+
+        // ========================= Deleta User ========================= //
+
     async deleteUser(token) {
         if (!token) {
             throw new Error("Token é obrigatório.");
@@ -135,6 +165,27 @@ class UserController {
         }
         await user.destroy()
 
+        return;
+    }
+
+    // ========================= Deleta Admin ========================= //
+    async deleteAdmin(id, token) {
+        if (!token) {
+            throw new Error("Token é obrigatório.");
+        }
+        let decoded;
+        try {
+            decoded = await jwt.verify(token, process.env.SEGREDO);
+        } catch (err) {
+            throw new Error("Falha na verificação do token: " + err.message);
+        }
+        
+        const user = await this.findUser(id);
+        if (!user) {
+            throw new Error("Usuário não encontrado.");
+        }
+    
+        await user.destroy();
         return;
     }
 

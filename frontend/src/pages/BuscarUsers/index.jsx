@@ -1,30 +1,51 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './styles.css';
 import { useNavigate } from 'react-router-dom';
-import { getUserById, createUser, updateAdmin, deleteAdmin } from '../../api/user';
+import { getUserById, getAllUsers, createUser, updateAdmin, deleteAdmin } from '../../api/user';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const USUARIOS_POR_PAGINA = 5; 
 export default function NovoUser() {
   const navigate = useNavigate();
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [userData, setUserData] = useState(null);
+  const [usuarios, setUsuarios] = useState([]);
+  const [paginaAtual, setPaginaAtual] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [isPasswordDisabled, setIsPasswordDisabled] = useState(false);
   const [userId, setUserId] = useState(null);
 
-  const handleBackClick = () => {
-    navigate('/fatos');
-  };
+  useEffect(() => {
+    async function carregarUsuarios() {
+      try {
+        setIsLoading(true);
+        const response = await getAllUsers();
+        setUsuarios(response.users || []);
+      } catch (error) {
+        toast.error('Erro ao carregar usuários');
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    carregarUsuarios();
+  }, []);
+
+  const indiceInicial = (paginaAtual - 1) * USUARIOS_POR_PAGINA;
+  const indiceFinal = indiceInicial + USUARIOS_POR_PAGINA;
+  const usuariosPagina = usuarios.slice(indiceInicial, indiceFinal);
+
+  const totalPaginas = Math.ceil(usuarios.length / USUARIOS_POR_PAGINA);
+
+  const handleBackClick = () => navigate('/fatos');
 
   const handleRegisterClick = async (e) => {
     e.preventDefault();
     if (nome && email && password) {
       try {
         setIsLoading(true);
-        const response = await createUser({ nome, email, password });
+        await createUser({ nome, email, password });
         toast.success('Usuário cadastrado com sucesso!');
         setNome('');
         setEmail('');
@@ -46,15 +67,12 @@ export default function NovoUser() {
     }
 
     if (nome && email) {
-
       try {
-        console.log(userId, { nome, email })
         setIsLoading(true);
-        const update = await updateAdmin(userId, { nome, email });
+        await updateAdmin(userId, { nome, email });
         toast.success('Usuário atualizado com sucesso!');
-        setUserData(update);
-        setNome(update.nome);
-        setEmail(update.email);
+        setNome('');
+        setEmail('');
       } catch (error) {
         toast.error('Erro ao atualizar usuário.');
       } finally {
@@ -73,7 +91,6 @@ export default function NovoUser() {
         const response = await getUserById(userId);
         if (response && response.users) {
           const user = response.users;
-          setUserData(user);
           setNome(user.nome || '');
           setEmail(user.email || '');
           setPassword(user.password || '');
@@ -90,82 +107,64 @@ export default function NovoUser() {
     }
   };
 
-  const handleDeleteClick = async () => {
-    const userIdToDelete = prompt('Por favor, insira o ID do usuário que deseja excluir:');
-    if (userIdToDelete) {
-      setIsLoading(true);
+  const handleDeleteClick = async (userIdToDelete) => {
+    const confirmDelete = window.confirm('Tem certeza que deseja excluir este usuário?');
+    if (confirmDelete) {
       try {
+        setIsLoading(true);
         await deleteAdmin(userIdToDelete);
         toast.success('Usuário excluído com sucesso!');
-        setNome('');
-        setEmail('');
-        setPassword('');
-        setUserData(null);
-        setUserId(null);
+        setUsuarios(usuarios.filter(user => user.id !== userIdToDelete));
       } catch (error) {
         toast.error('Erro ao excluir usuário');
         console.error('Erro ao excluir usuário:', error);
       } finally {
         setIsLoading(false);
       }
-    } else {
-      toast.error('Por favor, forneça um ID válido para excluir um usuário.');
     }
   };
 
   return (
     <div className="signup-container">
-      <form className="signup-form">
-        <p className="signup-title">Cadastrar Admin</p>
+      {/* Tabela de usuários com paginação */}
+      <div className="user-table-container">
+        <table className="user-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            {usuariosPagina.map((user) => (
+              <tr key={user.id}>
+                <td>{user.id}</td>
+                <td>{user.nome}</td>
+                <td>{user.email}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
-        <input
-          className="signup-input"
-          type="text"
-          required
-          value={nome}
-          onChange={(e) => setNome(e.target.value)}
-          placeholder="Nome"
-        />
-        <input
-          className="signup-input"
-          type="email"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-        />
-        <input
-          className="signup-input"
-          type="password"
-          required
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Senha"
-          disabled={isPasswordDisabled}
-        />
-
-        <div className="signup-btn-container">
-          <div className="btn-row">
-            <button className="signup-btn" type="button" onClick={handleRegisterClick}>
-              Cadastrar
-            </button>
-            <button className="signup-btn" type="button" onClick={handleSearchClick}>
-              Buscar
-            </button>
-          </div>
-          <div className="btn-row">
-            <button className="signup-btn" type="button" onClick={handleAlterClick}>
-              Alterar
-            </button>
-            <button className="signup-btn" type="button" onClick={handleDeleteClick}>
-              Excluir
-            </button>
-          </div>
-          <button className="signup-btn back-btn" type="button" onClick={handleBackClick}>
-            Voltar
+        <div className="pagination">
+          <button
+            disabled={paginaAtual === 1}
+            onClick={() => setPaginaAtual(paginaAtual - 1)}
+          >
+            Anterior
+          </button>
+          <span>
+            Página {paginaAtual} de {totalPaginas}
+          </span>
+          <button
+            disabled={paginaAtual === totalPaginas}
+            onClick={() => setPaginaAtual(paginaAtual + 1)}
+          >
+            Próxima
           </button>
         </div>
-      </form>
+      </div>
     </div>
   );
 }

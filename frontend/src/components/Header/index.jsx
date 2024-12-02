@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../../auth/Context';
 
 export default function Header() {
-    const { role } = useContext(AuthContext);  // Obtém o token do contexto
+    const { role } = useContext(AuthContext);
     return (
         <header className="cabecalho">
             <h1>Feitos de Chuck Norris</h1>
@@ -17,25 +17,15 @@ export default function Header() {
                     <Link to="/user">
                         <li>Perfil</li>
                     </Link>
+                    <Link to="/todasPiadas">
+                        <li>Todas as Piadas</li>
+                    </Link>
                     
-                    {/* Verifica se o token não existe e se não está na rota de login */}
-                    {
-                        role === 'admin'
-
-                            ? <Link to="/novoUser"><li>Criar</li></Link> &&
-                            <Link to="/fatos"> <li>Criar Fatos</li></Link>
-                            : null
-                    }
-                    {
-                        role === 'admin'
-
-                            ? <Link to="/novoUser"><li>Criar</li></Link>
-                            : null
-                    }
-
+                    {role === 'admin'?<Link to="/fatos"><li>Criar Fatos</li></Link>: null}
+                    {role === 'admin'?<Link to="/novoUser"><li>Criar</li></Link>: null}
+                    {role === 'admin'?<Link to="/buscarUsers"> <li>Buscar Usuarios</li></Link>: null}
                 </ul>
             </nav>
         </header>
     );
-
 }

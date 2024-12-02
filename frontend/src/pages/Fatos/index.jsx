@@ -22,7 +22,6 @@ export default function Piadas() {
         "viagem"
     ];
 
-    // Função para salvar uma nova piada
     async function salvarPiada() {
         if (!categoria || !texto) {
             setMensagem('Por favor, preencha todos os campos!');
@@ -47,31 +46,35 @@ export default function Piadas() {
          <main className="piada">
             <h2>Crie suas <s>piadas</s> FATOS sobre o Chuck Norris</h2>
             <div className="criar-piada">
-                <h3>Adicionar Novo Fato</h3>
+                <br/>
+                <div className = "centro"> 
+                    <label>
+                        Categoria:
+                        <select 
+                            value={categoria} 
+                            onChange={(e) => setCategoria(e.target.value)}
+                        >
+                            <option value="">Selecione uma categoria</option>
+                            {categorias.map((cat, index) => (
+                                <option key={index} value={cat}>
+                                    {cat}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
+                </div>
+                <br/>
                 <label>
-                    Categoria:
-                    <select 
-                        value={categoria} 
-                        onChange={(e) => setCategoria(e.target.value)}
-                    >
-                        <option value="">Selecione uma categoria</option>
-                        {categorias.map((cat, index) => (
-                            <option key={index} value={cat}>
-                                {cat}
-                            </option>
-                        ))}
-                    </select>
-                </label>
-                <label>
-                    Texto:
                     <textarea 
                         value={texto} 
                         onChange={(e) => setTexto(e.target.value)} 
                         placeholder="Digite o texto do fato"
                     />
                 </label>
-                <button onClick={salvarPiada}>Salvar Fato</button>
                 {mensagem && <p className="mensagem">{mensagem}</p>}
+                <div className = "centro">
+                    <button onClick={salvarPiada}>Salvar Fato</button>
+                </div>
             </div>
         </main>
     );

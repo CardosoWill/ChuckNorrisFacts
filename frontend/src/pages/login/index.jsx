@@ -5,22 +5,18 @@ import { AuthContext } from '../../auth/Context';
 import { loginUser } from '../../api/user';
 
 export default function Login() {
-  const  { login }  = useContext(AuthContext)
+  const { login } = useContext(AuthContext)
   const navigate = useNavigate();
 
   const apertaBotao = (event) => {
     event.preventDefault();
     navigate('/');
   };
-  /*
-    const handleBackClick = () => {
-      navigate('/')
-    };
-  
-    const handleCreateAccont = () => {
-      navigate('/login')
-    };
-  */
+  const cadastrese = (event) => {
+    event.preventDefault();
+    navigate('/register');
+  };
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -44,7 +40,7 @@ export default function Login() {
         alert("Ocorreu um erro. Tente novamente mais tarde.");
       }
     }
-};
+  };
 
   return (
     <main>
@@ -57,7 +53,8 @@ export default function Login() {
 
           <button className="login-btn" type="submit" onClick={handleSubmit}>Login</button>
 
-          <p className="login-signin">Não tem um login? <a href="/register" className="login-link">Clique aqui</a></p>
+          <p className="login-signin">Não tem um login? </p>
+          <button className="btn-cadastro" onClick={cadastrese} >Clique aqui</button>
         </form>
       </div>
     </main>
