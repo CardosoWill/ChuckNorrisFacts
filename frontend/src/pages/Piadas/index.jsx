@@ -25,15 +25,15 @@ export default function Piadas() {
     }
 
     function editarPiada() {
-        setEditando(true); // Ativa o modo de edição
-        setNovaPiada(piada); // Preenche o input com a piada atual
+        setEditando(true);
+        setNovaPiada(piada); 
     }
 
     function salvarEdicao() {
         if (novaPiada.trim()) {
             setPiada(novaPiada);
             updatePiada(id,novaPiada)
-            setEditando(false); // Sai do modo de edição
+            setEditando(false);
         } else {
             alert('A piada não pode estar vazia!');
         }

@@ -2,17 +2,12 @@ const JokeModel = require('../model/fatos');
 
 class JokeController {
 
-   
-
-    // ========================= Buscar Piada Aleatória ========================= //
     async getRandomJoke() {
         const joke = await JokeModel.findOne({
-            order: JokeModel.sequelize.random() // Pega uma piada aleatória do banco
+            order: JokeModel.sequelize.random()
         });
         return joke;
     }
-
-    // ========================= Criar uma nova piada ou múltiplas piadas ========================= //
     
     async createJokes(categoria,texto) {
         if (!categoria) {
@@ -36,12 +31,10 @@ class JokeController {
         return jokeValue;
     }
     
-    // ========================= Pega todas as piadas ========================= //
     async findAll() {
         return JokeModel.findAll();
     }
 
-    // ========================= Pega uma piada pelo ID ========================= //
     async findJokeById(idFatos) {
         if (!idFatos) {
             throw new Error("ID é obrigatório.");
@@ -56,7 +49,6 @@ class JokeController {
         return joke;
     }
 
-    // ========================= Atualiza uma piada no banco ========================= //
     async updateJoke(id, texto) {
         if (!id || !texto) {
             throw new Error("texto da piada, da piada é obrigatório.");
@@ -72,7 +64,6 @@ class JokeController {
         return jokeValue;
     }
 
-    // ========================= Deleta uma piada do banco ========================= //
     async deleteJoke(id) {
         if (!id) {
             throw new Error("ID é obrigatório.");

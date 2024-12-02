@@ -17,25 +17,23 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Rota sem token
+
 app.post('/api/v1/login', UserApi.login)
 app.post('/api/v1/create', UserApi.createUser);
 
-// Rota com token
+
 app.use("/api/v1/user", authMiddleware(),useRouter);
 app.use("/api/v1/jokes", authMiddleware(),jokeRouter);
 
-// Função para criar um usuário administrador se não existir
 async function createAdminUser() {
     try {
-        // Verifica se o administrador já existe
+
         const adminExists = await UserModel.findOne({ where: { permissao: 'admin' } });
 
         if (!adminExists) {
-            // Criptografa a senha do administrador
+
             const hashedPassword = await bcrypt.hash(process.env.SENHA_ADM, saltos);
 
-            // Cria o usuário administrador
             await UserModel.create({
                 nome: process.env.NAME_ADM,
                 email: process.env.EMAIL_ADM,
@@ -50,7 +48,7 @@ async function createAdminUser() {
 async function createPiadas() {
     try {   
         const piadaExists = await JokeModel.findOne({
-            order: JokeModel.sequelize.random() // Pega uma piada aleatória do banco
+            order: JokeModel.sequelize.random()
         });
         if (!piadaExists) { 
             await JokeModel.create(
@@ -71,7 +69,7 @@ async function createPiadas() {
     } 
 }
 database.db
-    .sync({ force: false }) // Não apaga os dados existentes ao sincronizar
+    .sync({ force: false }) 
     .then(() => {
         app.listen(process.env.PORT, () => {
             console.log("Servidor rodando na porta "+process.env.PORT);

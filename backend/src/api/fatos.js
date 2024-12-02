@@ -1,7 +1,7 @@
 const JokeController = require('../controller/fatos')
 
 class JokeApi {
-    // ========================= Buscar Piada Aleatória ========================= //
+
     async getRandomJoke(req, res) {
         try {
             const joke = await JokeController.getRandomJoke()
@@ -12,7 +12,6 @@ class JokeApi {
         }
     }
 
-// ========================= Criar Piadas ========================= //
 async createJoke(req, res) {
     const {categoria, texto} = req.body;
     try {
@@ -24,7 +23,6 @@ async createJoke(req, res) {
     }
 }
 
-    // ========================= Buscar todas as Piadas ========================= //
     async findAllJokes(req, res) {
         try {
             const jokes = await JokeController.findAll()
@@ -35,7 +33,6 @@ async createJoke(req, res) {
         }
     }
 
-    // ========================= Buscar Piada por ID ========================= //
     async findJokeById(req, res) {
         const { idFatos } = req.params
         try {
@@ -47,7 +44,6 @@ async createJoke(req, res) {
         }
     }
 
-    // ========================= Atualizar Piada ========================= //
     async updateJoke(req, res) {
         const { id } = req.params
         const { texto } = req.body
@@ -60,7 +56,6 @@ async createJoke(req, res) {
         }
     }
 
-    // ========================= Deletar Piada ========================= //
     async deleteJoke(req, res) {
         const { id } = req.params
 

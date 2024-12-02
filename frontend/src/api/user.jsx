@@ -10,14 +10,14 @@ export const deleteUser = async () => {
 }
 
 export const deleteAdmin = async (userId) => {
-    const token = localStorage.getItem("token"); // Obtém o token armazenado
+    const token = localStorage.getItem("token");
     if (!token) {
         throw new Error("Token de autenticação não encontrado.");
     }
 
     return api.delete(`/api/v1/user/${userId}`, {
         headers: {
-            Authorization: `Bearer ${token}`, // Passa o token no cabeçalho
+            Authorization: `Bearer ${token}`,
         },
     });
 };
@@ -47,5 +47,9 @@ export const updateUser = async (user) => {
 
 export const getUserById = async (id) => {
     const response = await api.get(`/api/v1/user/${id}`);
+    return response.data;
+};
+export const getAllUsers = async () => {
+    const response = await api.get(`/api/v1/user`);
     return response.data;
 };
